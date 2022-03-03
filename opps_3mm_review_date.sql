@@ -1,4 +1,4 @@
-SELECT str_to_date(concat(yearweek(`source`.`reviewed`), ' Sunday'), '%X%V %W') AS `reviewed`, count(distinct `source`.`opportunity_id`) AS `count`
+SELECT str_to_date(concat(yearweek(`source`.`reviewed`), ' Sunday'), '%X%V %W') AS `date`, count(distinct `source`.`opportunity_id`) AS `opps_3mm_review_date`
 FROM (select date(final.member_interested) as match_date,
     date(final.created) as created,
     final.opportunity_id as opportunity_id,
