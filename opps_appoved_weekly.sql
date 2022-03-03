@@ -1,4 +1,4 @@
-SELECT str_to_date(concat(yearweek(`opportunities`.`reviewed`), ' Sunday'), '%X%V %W') AS `reviewed`, count(distinct `opportunities`.`id`) AS `count`
+SELECT str_to_date(concat(yearweek(`opportunities`.`reviewed`), ' Sunday'), '%X%V %W') AS `date`, count(distinct `opportunities`.`id`) AS `opps_approved_weekly`
 FROM `opportunities`
 LEFT JOIN `opportunity_organizations` `Opportunity Organizations` ON `opportunities`.`id` = `Opportunity Organizations`.`opportunity_id`
 WHERE (`opportunities`.`reviewed` IS NOT NULL
