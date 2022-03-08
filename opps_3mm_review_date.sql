@@ -33,7 +33,7 @@ from (select potential_matches.*,
 ) as final 
 where final.match_sum = 3 
 order by 1 desc) `source`
-WHERE (`source`.`reviewed` >= date(date_add(now(6), INTERVAL -90 day))
+WHERE (`source`.`reviewed` >= date(date_add(now(6), INTERVAL -262 day))
    AND `source`.`reviewed` < date(now(6)))
 GROUP BY str_to_date(concat(yearweek(`source`.`reviewed`), ' Sunday'), '%X%V %W')
 ORDER BY str_to_date(concat(yearweek(`source`.`reviewed`), ' Sunday'), '%X%V %W') ASC

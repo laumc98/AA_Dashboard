@@ -7,7 +7,7 @@ left join tracking_code_candidates as tcc
 left join opportunity_members on o.id = opportunity_members.opportunity_id and poster = 1
 left join people on opportunity_members.person_id = people.id
 left join person_flags on people.id = person_flags.person_id
-where  date(opportunity_candidates.created) between date_sub(now(), interval 180 day) and now() AND
+where  date(opportunity_candidates.created) between date_sub(now(), interval 262 day) and now() AND
 o.objective not like '***%'
 and tc.utm_medium in ('srh_jobs', 'ja_mtc', 'am_sug', 'rc_cb_rcdt', 'rc_trrx_inv', 'ro_sug', 'rc_syn', 'rc_src', 'pr_sml_jobs','syn','src')
 group by 1, 2,3
