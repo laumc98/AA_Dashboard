@@ -1,4 +1,4 @@
-select str_to_date(concat(yearweek(`opportunity_candidates`.`created`), ' Sunday'), '%X%V %W')  as date,  IF(ISNULL(interested), 'started', 'finished') as finished, count(distinct opportunity_candidates.id) as applications 
+select str_to_date(concat(yearweek(`opportunity_candidates`.`created`), ' Sunday'), '%X%V %W')  as date,  IF(ISNULL(interested), 'started', 'finished') as finished, tc.utm_medium as UTM, count(distinct opportunity_candidates.id) as applications 
 from opportunity_candidates
 inner join opportunities as o on opportunity_candidates.opportunity_id = o.id
 left join tracking_code_candidates as tcc
