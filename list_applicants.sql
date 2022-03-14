@@ -1,6 +1,5 @@
 SELECT 
 `People`.`subject_identifier` AS `SubjectID`,
-`opportunity_candidates`.`interested` as date,
 WEEK(`opportunity_candidates`.`interested`, 0) AS `interested`, 
 `People`.`email` AS `email`
 FROM `opportunity_candidates`
