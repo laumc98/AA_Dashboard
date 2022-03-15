@@ -1,6 +1,7 @@
 SELECT 
 `People`.`subject_identifier` AS `SubjectID`,
-WEEK(`opportunity_candidates`.`interested`, 0) AS `interested`, 
+`opportunity_candidates`.`id` AS `id`,
+`opportunity_candidates`.`interested` AS `interested`,
 `People`.`email` AS `email`
 FROM `opportunity_candidates`
 LEFT JOIN `opportunity_members` `Opportunity Members - Opportunity` ON `opportunity_candidates`.`opportunity_id` = `Opportunity Members - Opportunity`.`opportunity_id` 
