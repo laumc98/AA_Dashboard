@@ -34,7 +34,7 @@ from (select potential_matches.*,
 where final.match_sum = 3 
 order by 1 desc) `source`
 LEFT JOIN `opportunities` `Opportunities` ON `source`.`opportunity_id` = `Opportunities`.`id`
-WHERE (`source`.`reviewed` >= date(date_add(now(6), INTERVAL -262 day))
+WHERE (`source`.`reviewed` > "2021-7-18"
    AND `source`.`reviewed` < date(now(6)) AND `Opportunities`.`remote` = TRUE)
 GROUP BY str_to_date(concat(yearweek(`source`.`reviewed`), ' Sunday'), '%X%V %W')
 ORDER BY str_to_date(concat(yearweek(`source`.`reviewed`), ' Sunday'), '%X%V %W') ASC
