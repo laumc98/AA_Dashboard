@@ -35,6 +35,6 @@ where final.match_sum = 3
 order by 1 desc) `source`
 WHERE (`source`.`created` > "2021-7-18"
    AND `source`.`created` < date(date_add(now(6), INTERVAL 1 day))
-   AND datediff(date(`source`.`match_date`),date(`source`.`reviewed`)) <= 7)
+   AND `source`.`diff_reviewed_to_match` <= 7)
 GROUP BY str_to_date(concat(yearweek(`source`.`match_date`), ' Sunday'), '%X%V %W')
 ORDER BY str_to_date(concat(yearweek(`source`.`match_date`), ' Sunday'), '%X%V %W') ASC
