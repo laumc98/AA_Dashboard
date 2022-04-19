@@ -1,5 +1,5 @@
 select
-  str_to_date(concat(yearweek(dt.hiring_date), ' Sunday'), '%X%V %W') as date,
+  str_to_date(concat(yearweek(dt.hiring_date), ' Sunday'), '%X%V %W') as hiring_date,
   wk.weekly_from_TSO as weekly_from_TSO_prime
 from (   
   select      
