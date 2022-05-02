@@ -1,7 +1,7 @@
 SELECT
     str_to_date(concat(yearweek(`source`.`interested`), ' Sunday'),'%X%V %W') AS `date`,
     `source`.`Tracking Codes__utm_medium` AS `Tracking Codes__utm_medium`,
-    count(distinct `source`.`id`) AS `weekly_mm_channel_appdate_remote`
+    count(distinct `source`.`id`) AS `weekly_mm_channel_appdate_prime`
 FROM
     (
         SELECT
