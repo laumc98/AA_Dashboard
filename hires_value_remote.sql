@@ -55,3 +55,4 @@ from
                     and osh.hiring_date is not null
             ) as compensations
     ) as final
+where final.hire_value < '600000'
