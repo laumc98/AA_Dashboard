@@ -36,6 +36,7 @@ FROM
                     WHERE
                           oc.name = 'mutual matches'
                       AND occh.created >= '2021-01-01'
+                      AND datediff(date(occh.created), date(o.reviewed)) <= 7
                       AND o.objective NOT LIKE '**%'
                       AND o.id NOT IN (SELECT DISTINCT
                                            opportunity_id
@@ -98,6 +99,7 @@ FROM
                                    WHERE
                                          oc.name = 'mutual matches'
                                      AND occh.created >= '2021-01-01'
+                                     AND datediff(date(occh.created), date(o.reviewed)) <= 7
                                      AND o.objective NOT LIKE '**%'
                                      AND o.id NOT IN (SELECT DISTINCT
                                                           opportunity_id

@@ -1,39 +1,133 @@
-SELECT str_to_date(concat(yearweek(`source`.`match_date`), ' Sunday'), '%X%V %W') AS `date`, count(distinct `source`.`opportunity_id`) AS `opps_3mm_weekly`
-FROM (select date(final.member_interested) as match_date,
-    date(final.created) as created,
-    final.opportunity_id as opportunity_id,
-    final.objective as opportunity_objective,
-    final.review as review,
-    final.match_sum as match_sum,
-    date(final.reviewed) as reviewed,
-    datediff(date(final.member_interested), date(final.reviewed)) as diff_reviewed_to_match
-from (select potential_matches.*,
-        if( @index<>potential_matches.opportunity_id , @sum:= 1, @sum := @sum + 1) as match_sum,
-        if( @index<>potential_matches.opportunity_id , @index:=potential_matches.opportunity_id, @index := @index) as idd 
-    from(select o.id as opportunity_id,
-            o.objective as objective,
-            oc.person_id as candidate_person_id,
-            oc.interested as candidate_interested,
-            me.interested as member_interested,
-            o.stable_on as stable_on,
-            o.review as review,
-            o.reviewed as reviewed,
-            o.created as created 
-        from opportunities o 
-            inner join opportunity_candidates oc on oc.opportunity_id = o.id and oc.interested is not null and o.objective not like "**%"
-            inner join metrics_people ocp on ocp.id = oc.person_id 
-            inner join member_evaluations me on me.candidate_id = oc.id and me.interested is not null 
-            inner join opportunity_members om on om.id = me.member_id
-            inner join metrics_people mep on mep.id = om.person_id
-            inner join opportunity_organizations org on org.opportunity_id = o.id and org.organization_id != '665801' and org.active = true
-        where me.interested > '2020-01-01' 
-    ) as potential_matches 
-    cross join (select @sum := 0, @index := 0) params 
-    order by potential_matches.opportunity_id, potential_matches.member_interested asc
-) as final 
-where final.match_sum = 3 
-order by 1 desc) `source`
-WHERE (`source`.`created` > "2021-7-18"
-   AND `source`.`created` < date(date_add(now(6), INTERVAL 1 day)))
-GROUP BY str_to_date(concat(yearweek(`source`.`match_date`), ' Sunday'), '%X%V %W')
-ORDER BY str_to_date(concat(yearweek(`source`.`match_date`), ' Sunday'), '%X%V %W') ASC
+SELECT
+    str_to_date(concat(yearweek(dt.created), ' Sunday'),'%X%V %W') AS date,
+    wk.opportunities AS opps_3mm_weekly_7days
+FROM
+    (SELECT
+         YEAR(match_date) AS year,
+         WEEK(match_date) AS week,
+         DATE(match_date) AS created,
+         COUNT(*)         AS opportunities
+     FROM
+         (SELECT
+              opportunity_id,
+              created AS match_date
+          FROM
+              (SELECT
+                   matches.*,
+                   IF(
+                               @index <> matches.opportunity_id,
+                               @sum := 1,
+                               @sum := @sum + 1
+                       ) AS match_sum,
+                   IF(
+                               @index <> matches.opportunity_id,
+                               @index := matches.opportunity_id,
+                               @index := @index
+                       ) AS idd
+               FROM
+                   (SELECT
+                        oc.opportunity_id,
+                        occh.created,
+                        oc.name
+                    FROM
+                        opportunity_candidate_column_history occh
+                            INNER JOIN opportunity_columns oc ON occh.to = oc.id
+                            INNER JOIN opportunities o ON oc.opportunity_id = o.id
+                    WHERE
+                          oc.name = 'mutual matches'
+                      AND occh.created >= '2021-01-01'
+                      AND datediff(date(occh.created), date(o.reviewed)) <= 15
+                      AND o.objective NOT LIKE '**%'
+                      AND o.id NOT IN (SELECT DISTINCT
+                                           opportunity_id
+                                       FROM
+                                           opportunity_organizations oorg
+                                       WHERE
+                                             oorg.organization_id = '748404'
+                                         AND oorg.active)
+                      AND o.id IN (SELECT DISTINCT
+                                       o.id AS opportunity_id
+                                   FROM
+                                       opportunities o
+                                           INNER JOIN opportunity_members omp ON omp.opportunity_id = o.id
+                                           AND omp.poster = TRUE
+                                           INNER JOIN person_flags pf ON pf.person_id = omp.person_id
+                                           AND pf.opportunity_crawler = FALSE
+                                   WHERE
+                                         o.reviewed >= '2021/01/01'
+                                     AND o.objective NOT LIKE '**%'
+                                     AND o.review = 'approved')
+                    ORDER BY
+                        opportunity_id,
+                        occh.created) AS matches
+                       CROSS JOIN (SELECT
+                                       @sum := 0,
+                                       @index := 0) counter) numbered
+          WHERE
+              match_sum = 3) groupped
+     GROUP BY year,week,created) AS dt
+        INNER JOIN (SELECT
+                        YEAR(match_date) AS year,
+                        WEEK(match_date) AS week,
+                        COUNT(*)         AS opportunities
+                    FROM
+                        (SELECT
+                             opportunity_id,
+                             created AS match_date
+                         FROM
+                             (SELECT
+                                  matches.*,
+                                  IF(
+                                              @index <> matches.opportunity_id,
+                                              @sum := 1,
+                                              @sum := @sum + 1
+                                      ) AS match_sum,
+                                  IF(
+                                              @index <> matches.opportunity_id,
+                                              @index := matches.opportunity_id,
+                                              @index := @index
+                                      ) AS idd
+                              FROM
+                                  (SELECT
+                                       oc.opportunity_id,
+                                       occh.created,
+                                       oc.name
+                                   FROM
+                                       opportunity_candidate_column_history occh
+                                           INNER JOIN opportunity_columns oc ON occh.to = oc.id
+                                           INNER JOIN opportunities o ON oc.opportunity_id = o.id
+                                   WHERE
+                                         oc.name = 'mutual matches'
+                                     AND occh.created >= '2021-01-01'
+                                     AND datediff(date(occh.created), date(o.reviewed)) <= 15
+                                     AND o.objective NOT LIKE '**%'
+                                     AND o.id NOT IN (SELECT DISTINCT
+                                                          opportunity_id
+                                                      FROM
+                                                          opportunity_organizations oorg
+                                                      WHERE
+                                                            oorg.organization_id = '748404'
+                                                        AND oorg.active)
+                                     AND o.id IN (SELECT DISTINCT
+                                                      o.id AS opportunity_id
+                                                  FROM
+                                                      opportunities o
+                                                          INNER JOIN opportunity_members omp
+                                                                     ON omp.opportunity_id = o.id
+                                                                         AND omp.poster = TRUE
+                                                          INNER JOIN person_flags pf ON pf.person_id = omp.person_id
+                                                          AND pf.opportunity_crawler = FALSE
+                                                  WHERE
+                                                        o.reviewed >= '2021/01/01'
+                                                    AND o.objective NOT LIKE '**%'
+                                                    AND o.review = 'approved')
+                                   ORDER BY
+                                       opportunity_id,
+                                       occh.created) AS matches
+                                      CROSS JOIN (SELECT
+                                                      @sum := 0,
+                                                      @index := 0) counter) numbered
+                         WHERE
+                             match_sum = 3) groupped
+                    GROUP BY year,week) AS wk ON wk.year = dt.year
+        AND wk.week = dt.week;
