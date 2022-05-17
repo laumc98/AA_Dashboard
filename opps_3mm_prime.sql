@@ -1,6 +1,6 @@
 SELECT
     str_to_date(concat(yearweek(dt.created), ' Sunday'),'%X%V %W') AS date,
-    wk.opportunities AS opps_3mm_prime7days
+    wk.opportunities AS opps_3mm_prime15days
 FROM
     (SELECT
          YEAR(match_date) AS year,
