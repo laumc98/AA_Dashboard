@@ -1,6 +1,6 @@
 SELECT
     str_to_date(concat(yearweek(`source`.`interested`), ' Sunday'),'%X%V %W') AS `date`,
-    count(distinct `source`.`id`) AS `weekly_app_channel_prime`
+    count(distinct `source`.`id`) AS `weekly_app_channel_self_service`
 FROM
     (
         SELECT
@@ -30,7 +30,7 @@ WHERE
     (
         `source`.`interested` > "2021-7-18"
         AND `source`.`interested` < date(date_add(now(6), INTERVAL 1 day))
-        AND `source`.`Opportunities__fulfillment` = 'prime'
+        AND `source`.`Opportunities__fulfillment` = 'self_service'
     )
 GROUP BY
     str_to_date(concat(yearweek(`source`.`interested`), ' Sunday'),'%X%V %W')
