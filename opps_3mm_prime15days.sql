@@ -1,6 +1,6 @@
 SELECT
     str_to_date(concat(yearweek(dt.reviewed), ' Sunday'),'%X%V %W') AS date,
-    wk.opportunities AS opps_3mm_prime7days
+    wk.opportunities AS opps_3mm_prime15days
 FROM
     (
         SELECT
@@ -43,7 +43,7 @@ FROM
                                     oc.name = 'mutual matches'
                                     AND occh.created >= '2021-01-01'
                                     AND o.fulfillment = 'prime'
-                                    AND datediff(date(occh.created), date(o.reviewed)) <= 7
+                                    AND datediff(date(occh.created), date(o.reviewed)) <= 15
                                     AND o.objective NOT LIKE '**%'
                                     AND o.id NOT IN (
                                         SELECT
@@ -126,7 +126,7 @@ FROM
                                     oc.name = 'mutual matches'
                                     AND occh.created >= '2021-01-01'
                                     AND o.fulfillment = 'prime'
-                                    AND datediff(date(occh.created), date(o.reviewed)) <= 7
+                                    AND datediff(date(occh.created), date(o.reviewed)) <= 15
                                     AND o.objective NOT LIKE '**%'
                                     AND o.id NOT IN (
                                         SELECT

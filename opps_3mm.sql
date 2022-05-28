@@ -1,6 +1,6 @@
 SELECT
     str_to_date(concat(yearweek(dt.reviewed), ' Sunday'),'%X%V %W') AS date,
-    wk.opportunities AS opps_3mm_weekly_7days
+    wk.opportunities AS opps_3mm_weekly
 FROM
     (
         SELECT
