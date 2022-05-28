@@ -1,18 +1,19 @@
 SELECT
-    str_to_date(concat(yearweek(dt.created), ' Sunday'),'%X%V %W') AS date,
+    str_to_date(concat(yearweek(dt.reviewed), ' Sunday'),'%X%V %W') AS date,
     wk.opportunities AS opps_3mm_remote_7days
 FROM
     (
         SELECT
-            YEAR(match_date) AS year,
-            WEEK(match_date) AS week,
-            DATE(match_date) AS created,
+            YEAR(reviewed_date) AS year,
+            WEEK(reviewed_date) AS week,
+            DATE(reviewed_date) AS reviewed,
             COUNT(*) AS opportunities
         FROM
             (
                 SELECT
                     opportunity_id,
-                    created AS match_date
+                    created AS match_date,
+                    reviewed AS reviewed_date
                 FROM
                     (
                         SELECT
@@ -32,6 +33,7 @@ FROM
                                 SELECT
                                     oc.opportunity_id,
                                     occh.created,
+                                    o.reviewed,
                                     oc.name
                                 FROM
                                     opportunity_candidate_column_history occh
@@ -68,7 +70,7 @@ FROM
                                     )
                                 ORDER BY
                                     opportunity_id,
-                                    occh.created
+                                    o.reviewed
                             ) AS matches
                             CROSS JOIN (
                                 SELECT
@@ -82,18 +84,19 @@ FROM
         GROUP BY
             year,
             week,
-            created
+            reviewed
     ) AS dt
     INNER JOIN (
         SELECT
-            YEAR(match_date) AS year,
-            WEEK(match_date) AS week,
+            YEAR(reviewed_date) AS year,
+            WEEK(reviewed_date) AS week,
             COUNT(*) AS opportunities
         FROM
             (
                 SELECT
                     opportunity_id,
-                    created AS match_date
+                    created AS match_date,
+                    reviewed AS reviewed_date
                 FROM
                     (
                         SELECT
@@ -113,6 +116,7 @@ FROM
                                 SELECT
                                     oc.opportunity_id,
                                     occh.created,
+                                    o.reviewed,
                                     oc.name
                                 FROM
                                     opportunity_candidate_column_history occh
@@ -149,7 +153,7 @@ FROM
                                     )
                                 ORDER BY
                                     opportunity_id,
-                                    occh.created
+                                    o.reviewed
                             ) AS matches
                             CROSS JOIN (
                                 SELECT
