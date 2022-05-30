@@ -1,5 +1,5 @@
 SELECT
-   str_to_date(concat(yearweek(`opportunity_stats_hires`.`hiring_date`),'Sunday'),'%X%V %W') AS `date`,
+   str_to_date(concat(yearweek(`Opportunities`.`reviewed`),'Sunday'),'%X%V %W') AS `date`,
    count(distinct `opportunity_stats_hires`.`opportunity_id`) AS `opps_hire_weekly_prime14days`
 FROM
    `opportunity_stats_hires`
