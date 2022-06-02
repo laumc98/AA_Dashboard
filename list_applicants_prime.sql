@@ -18,10 +18,6 @@ WHERE
             NOT (lower(`People`.`username`) like '%test%')
             OR `People`.`username` IS NULL
         )
-        AND `opportunity_candidates`.`interested` >= convert_tz(
-            '2021-06-20 00:00:00.000',
-            'UTC',
-            @ @session.time_zone
-        )
+        AND `opportunity_candidates`.`interested` >= "2021-06-20"
     )
     AND (`o`.`fulfillment` = 'prime')

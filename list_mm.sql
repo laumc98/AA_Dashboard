@@ -7,9 +7,6 @@ FROM
 WHERE
    (
       `opportunity_candidates__via__c`.`interested` IS NOT NULL
-      AND `member_evaluations`.`interested` >= convert_tz(
-         '2021-06-20 00:00:00.000',
-         'UTC',
-         @ @session.time_zone
+      AND `member_evaluations`.`interested` >= "2021-06-20"
       )
    )
