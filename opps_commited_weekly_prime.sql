@@ -1,3 +1,4 @@
+/* AA : AA Main dashboard : weekly prime opps commited by approved date : prod */ 
 SELECT
    str_to_date(concat(yearweek(`opportunities__via__opportunit`.`reviewed`),' Sunday'),'%X%V %W') AS `date`,
    count(distinct `opportunity_changes_history`.`opportunity_id`) AS `opps_commited_weekly_prime`

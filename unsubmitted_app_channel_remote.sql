@@ -1,3 +1,4 @@
+/* AA : AA Main dashboard : weekly unsubmitted remote app per channel : prod */ 
 select
   str_to_date(concat(yearweek(`opportunity_candidates`.`created`),' Sunday'),'%X%V %W') as date,
   IF(ISNULL(interested), 'started', 'finished') as finished,

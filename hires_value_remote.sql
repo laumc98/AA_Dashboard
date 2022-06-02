@@ -1,3 +1,4 @@
+/* AA : AA Main dashboard : hires value remote : prod */ 
 select
     str_to_date(concat(yearweek(hiring_date), ' Sunday'), '%X%V %W') as hiring_date,
     utm,

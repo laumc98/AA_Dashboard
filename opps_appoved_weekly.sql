@@ -1,3 +1,4 @@
+/* AA : AA Main dashboard : weekly opps approved : prod */ 
 SELECT
     str_to_date(concat(yearweek(`opportunities`.`reviewed`), ' Sunday'),'%X%V %W') AS `date`,
     count(distinct `opportunities`.`id`) AS `opps_approved_weekly`

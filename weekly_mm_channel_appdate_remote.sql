@@ -1,3 +1,4 @@
+/* AA : AA Main dashboard : weekly remote mm per channel by app date : prod */ 
 SELECT
     str_to_date(concat(yearweek(`source`.`interested`), ' Sunday'),'%X%V %W') AS `date`,
     `source`.`Tracking Codes__utm_medium` AS `Tracking Codes__utm_medium`,

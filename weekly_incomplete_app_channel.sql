@@ -1,3 +1,4 @@
+/* AA : AA Main dashboard : weekly incomplete app per channel : prod */ 
 SELECT
     str_to_date(concat(yearweek(`source`.`created`), ' Sunday'),'%X%V %W') AS `date`,
     `source`.`Tracking Codes__utm_medium` AS `Tracking Codes__utm_medium`,

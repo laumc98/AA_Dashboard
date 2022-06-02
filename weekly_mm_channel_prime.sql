@@ -1,3 +1,4 @@
+/* AA : AA Main dashboard : weekly prime mm per channel : prod */ 
 SELECT
     `source`.`Tracking Codes__utm_medium` AS `Tracking Codes__utm_medium`,
     str_to_date(concat(yearweek(`Member Evaluations`.`interested`),' Sunday'),'%X%V %W') AS `date`,

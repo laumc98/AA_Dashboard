@@ -1,3 +1,4 @@
+/* AA : AA Main dashboard : list mm : prod */ 
 SELECT
    `member_evaluations`.`candidate_id` AS `candidate_id`,
    `member_evaluations`.`interested` AS `MM_interested`

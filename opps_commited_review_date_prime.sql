@@ -1,5 +1,6 @@
+/* AA : AA Main dashboard : weekly prime opps commited by event date : prod */ 
 SELECT
-   str_to_date(concat(yearweek(`opportunities__via__opportunit`.`reviewed`),' Sunday'),'%X%V %W') AS `date`,
+   str_to_date(concat(yearweek(`opportunity_changes_history`.`created`),' Sunday'),'%X%V %W') AS `date`,
    count(distinct `opportunity_changes_history`.`opportunity_id`) AS `opps_commited_review_date_prime`
 FROM
    `opportunity_changes_history`
@@ -13,6 +14,6 @@ WHERE
       AND `opportunities__via__opportunit`.`fulfillment` = 'prime'
    )
 GROUP BY
-   str_to_date(concat(yearweek(`opportunities__via__opportunit`.`reviewed`),' Sunday'),'%X%V %W')
+   str_to_date(concat(yearweek(`opportunity_changes_history`.`created`),' Sunday'),'%X%V %W')
 ORDER BY
-   str_to_date(concat(yearweek(`opportunities__via__opportunit`.`reviewed`),' Sunday'),'%X%V %W') ASC
+   str_to_date(concat(yearweek(`opportunity_changes_history`.`created`),' Sunday'),'%X%V %W') ASC

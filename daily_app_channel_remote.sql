@@ -1,3 +1,4 @@
+/* AA : AA Main dashboard : daily app remote : prod */ 
 SELECT
     `source`.`interested` AS `date`,
     `source`.`Tracking Codes__utm_medium` AS `Tracking Codes__utm_medium`,

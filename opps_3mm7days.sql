@@ -1,3 +1,4 @@
+/* AA : AA Main dashboard : opps with 3+mm 7 days : prod */ 
 SELECT
     str_to_date(concat(yearweek(dt.reviewed), ' Sunday'),'%X%V %W') AS date,
     wk.opportunities AS opps_3mm_weekly_7days

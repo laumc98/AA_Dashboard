@@ -1,3 +1,4 @@
+/* AA : AA Main dashboard : general app prime : prod */ 
 SELECT
     str_to_date(concat(yearweek(`source`.`interested`), ' Sunday'),'%X%V %W') AS `date`,
     count(distinct `source`.`id`) AS `weekly_app_channel_prime`
