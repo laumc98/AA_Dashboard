@@ -6,6 +6,7 @@ FROM
     (
         SELECT
             `opportunity_candidates`.`application_step` AS `application_step`,
+            `opportunity_candidates`.`created` AS `created`,
             `opportunity_candidates`.`id` AS `id`,
             `opportunity_candidates`.`interested` AS `interested`,
             `opportunity_candidates`.`opportunity_id` AS `opportunity_id`,
