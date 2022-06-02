@@ -1,14 +1,18 @@
 SELECT
     str_to_date(concat(yearweek(`source`.`interested`), ' Sunday'),'%X%V %W') AS `date`,
+    `source`.`opportunity_id` AS `ID`,
     `source`.`Tracking Codes__utm_medium` AS `Tracking Codes__utm_medium`,
-    count(distinct `source`.`id`) AS `weekly_app_channel_remote`
+    count(distinct `source`.`id`) AS `weekly_app_channel`
 FROM
     (
         SELECT
+            `opportunity_candidates`.`application_step` AS `application_step`,
             `opportunity_candidates`.`id` AS `id`,
             `opportunity_candidates`.`interested` AS `interested`,
+            `opportunity_candidates`.`opportunity_id` AS `opportunity_id`,
             `Tracking Codes`.`utm_medium` AS `Tracking Codes__utm_medium`,
-            `Opportunities`.`remote` AS `Opportunities__remote`
+            `Opportunities`.`remote` AS `Opportunities__remote`,
+            `Opportunities`.`fulfillment` AS `Opportunities__fulfillment`
         FROM
             `opportunity_candidates`
             LEFT JOIN `tracking_code_candidates` `Tracking Code Candidates` ON `opportunity_candidates`.`id` = `Tracking Code Candidates`.`candidate_id`
@@ -30,13 +34,13 @@ FROM
     ) `source`
 WHERE
     (
-        `source`.`Opportunities__remote` = 1
-        AND `source`.`interested` > "2021-7-18"
+        `source`.`interested` > "2021-7-18"
         AND `source`.`interested` < date(date_add(now(6), INTERVAL 1 day))
     )
 GROUP BY
     str_to_date(concat(yearweek(`source`.`interested`), ' Sunday'),'%X%V %W'),
-    `source`.`Tracking Codes__utm_medium`
+    `source`.`Tracking Codes__utm_medium`,
+    `source`.`opportunity_id`
 ORDER BY
     str_to_date(concat(yearweek(`source`.`interested`), ' Sunday'),'%X%V %W') ASC,
     `source`.`Tracking Codes__utm_medium` ASC
