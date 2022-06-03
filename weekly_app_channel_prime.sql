@@ -1,6 +1,7 @@
 /* AA : AA Main dashboard : weekly prime app per channel : prod */ 
 SELECT
     str_to_date(concat(yearweek(`source`.`interested`), ' Sunday'),'%X%V %W') AS `date`,
+    `source`.`opportunity_id` AS `ID`,
     `source`.`Tracking Codes__utm_medium` AS `Tracking Codes__utm_medium`,
     count(distinct `source`.`id`) AS `weekly_app_channel_prime`
 FROM
@@ -40,7 +41,8 @@ WHERE
     )
 GROUP BY
     str_to_date(concat(yearweek(`source`.`interested`), ' Sunday'),'%X%V %W'),
-    `source`.`Tracking Codes__utm_medium`
+    `source`.`Tracking Codes__utm_medium`,
+    `source`.`opportunity_id`
 ORDER BY
     str_to_date(concat(yearweek(`source`.`interested`), ' Sunday'),'%X%V %W') ASC,
     `source`.`Tracking Codes__utm_medium` ASC

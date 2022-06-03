@@ -1,6 +1,7 @@
 /* AA : AA Main dashboard : weekly mm per channel : prod */ 
 SELECT
     str_to_date(concat(yearweek(`Member Evaluations`.`interested`),' Sunday'),'%X%V %W') AS `date`,
+    `source`.`opportunity_id` AS `ID`,
     `source`.`Tracking Codes__utm_medium` AS `Tracking Codes__utm_medium`,
     count(distinct `source`.`id`) AS `weekly_mm_channel`
 FROM
@@ -42,7 +43,8 @@ WHERE
     )
 GROUP BY
     `source`.`Tracking Codes__utm_medium`,
-    str_to_date(concat(yearweek(`Member Evaluations`.`interested`),' Sunday'),'%X%V %W')
+    str_to_date(concat(yearweek(`Member Evaluations`.`interested`),' Sunday'),'%X%V %W'),
+    `source`.`opportunity_id`
 ORDER BY
     `source`.`Tracking Codes__utm_medium` ASC,
     str_to_date(concat(yearweek(`Member Evaluations`.`interested`),' Sunday'),'%X%V %W') ASC
