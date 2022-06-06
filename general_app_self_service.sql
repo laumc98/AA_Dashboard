@@ -1,39 +1,28 @@
-/* AA : AA Main dashboard : general app self service : prod */ 
-SELECT
-    str_to_date(concat(yearweek(`source`.`interested`), ' Sunday'),'%X%V %W') AS `date`,
-    count(distinct `source`.`id`) AS `weekly_app_channel_self_service`
-FROM
-    (
+/* AA : AA Main dashboard : general unsubmited torre opps : prod */
+select 
+    str_to_date(concat(yearweek(`opportunity_candidates`.`created`),' Sunday'),'%X%V %W') as date,
+    IF(ISNULL(interested), 'started', 'finished') as finished,
+    count(distinct opportunity_candidates.id) as applications
+from
+    opportunity_candidates
+    inner join opportunities as o on opportunity_candidates.opportunity_id = o.id
+    left join tracking_code_candidates as tcc
+    left join tracking_codes as tc on tcc.tracking_code_id = tc.id on tcc.candidate_id = opportunity_candidates.id
+    left join opportunity_members on o.id = opportunity_members.opportunity_id
+    and poster = 1
+    left join people on opportunity_members.person_id = people.id
+    left join person_flags on people.id = person_flags.person_id
+where
+    date(opportunity_candidates.created) > "2021-7-18"
+    AND o.objective not like '***%'
+    AND opportunity_candidates.application_step IS NOT NULL
+    AND o.id IN (
         SELECT
-            `opportunity_candidates`.`id` AS `id`,
-            `opportunity_candidates`.`interested` AS `interested`,
-            `Opportunities`.`fulfillment` AS `Opportunities__fulfillment`
+            DISTINCT opportunity_id
         FROM
-            `opportunity_candidates`
-            LEFT JOIN `tracking_code_candidates` `Tracking Code Candidates` ON `opportunity_candidates`.`id` = `Tracking Code Candidates`.`candidate_id`
-            LEFT JOIN `tracking_codes` `Tracking Codes` ON `Tracking Code Candidates`.`tracking_code_id` = `Tracking Codes`.`id`
-            LEFT JOIN `opportunity_members` `Opportunity Members - Opportunity` ON `opportunity_candidates`.`opportunity_id` = `Opportunity Members - Opportunity`.`opportunity_id`
-            LEFT JOIN `person_flags` `Person Flags - Person` ON `Opportunity Members - Opportunity`.`person_id` = `Person Flags - Person`.`person_id`
-            LEFT JOIN `people` `People` ON `opportunity_candidates`.`person_id` = `People`.`id`
-            LEFT JOIN `opportunities` `Opportunities` ON `opportunity_candidates`.`opportunity_id` = `Opportunities`.`id`
+            opportunity_organizations oorg
         WHERE
-            (
-                `Person Flags - Person`.`opportunity_crawler` = FALSE
-                AND `Opportunity Members - Opportunity`.`poster` = TRUE
-                AND (
-                    NOT (lower(`People`.`username`) like '%test%')
-                    OR `People`.`username` IS NULL
-                )
-                AND `opportunity_candidates`.`retracted` IS NULL
-            )
-    ) `source`
-WHERE
-    (
-        `source`.`interested` > "2021-7-18"
-        AND `source`.`interested` < date(date_add(now(6), INTERVAL 1 day))
-        AND `source`.`Opportunities__fulfillment` = 'self_service'
+            oorg.organization_id = '748404'
+            AND oorg.active
     )
-GROUP BY
-    str_to_date(concat(yearweek(`source`.`interested`), ' Sunday'),'%X%V %W')
-ORDER BY
-    str_to_date(concat(yearweek(`source`.`interested`), ' Sunday'),'%X%V %W') ASC
+group by 1,2
