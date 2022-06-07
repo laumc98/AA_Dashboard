@@ -23,7 +23,7 @@ FROM
             LEFT JOIN `person_flags` `Person Flags - Person` ON `Opportunity Members - Opportunity`.`person_id` = `Person Flags - Person`.`person_id`
             LEFT JOIN `people` `People` ON `opportunity_candidates`.`person_id` = `People`.`id`
             LEFT JOIN `opportunities` `Opportunities` ON `opportunity_candidates`.`opportunity_id` = `Opportunities`.`id`
-            LEFT JOIN `opportunity_operational_hires` ON `opportunity_candidates`.`opportunity_id` = `opportunity_operational_hires`.`opportunity_id`
+            LEFT JOIN `opportunity_operational_hires` ON `opportunity_candidates`.`id` = `opportunity_operational_hires`.`opportunity_candidate_id`
         WHERE
             (
                 `Person Flags - Person`.`opportunity_crawler` = FALSE
