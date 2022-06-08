@@ -7,7 +7,6 @@ from
     (
         select
             compensations.hiring_date,
-            compensations.hiring_verified,
             compensations.utm,
             case
                 when compensations.periodicity = 'yearly' then dollars
@@ -22,7 +21,6 @@ from
                 select
                     oc.periodicity,
                     osh.hiring_date,
-                    osh.hiring_verified,
                     tc.utm_medium as utm,
                     case
                         when oc.max_amount is not null then IF(
@@ -37,7 +35,7 @@ from
                         )
                     end as dollars
                 from
-                    opportunity_stats_hires osh
+                    opportunity_operational_hires osh
                     inner join opportunities o on o.id = osh.opportunity_id
                     inner join opportunity_compensations oc on o.id = oc.opportunity_id
                     and oc.active
@@ -47,7 +45,7 @@ from
                     and org.active = true
                     inner join opportunity_candidates oca on (
                         oca.opportunity_id = osh.opportunity_id
-                        and oca.person_id = osh.candidate_person_id
+                        and oca.id = osh.opportunity_candidate_id
                     )
                     left join tracking_code_candidates tcc on tcc.candidate_id = oca.id
                     left join tracking_codes tc on tc.id = tcc.tracking_code_id
