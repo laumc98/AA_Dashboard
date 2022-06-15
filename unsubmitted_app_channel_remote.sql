@@ -22,6 +22,8 @@ where
     'ja_mtc',
     'am_inv',
     'am_sug',
+    'rc_am_sug',
+    'rc_sml_jobs',
     'rc_cb_rcdt',
     'rc_trrx_inv',
     'ro_sug',
