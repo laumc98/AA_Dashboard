@@ -2,7 +2,7 @@
 select
     str_to_date(concat(yearweek(`opportunity_candidates`.`created`),' Sunday'),'%X%V %W') as date,
     IF(ISNULL(interested), 'started', 'finished') as finished,
-    count(distinct opportunity_candidates.id) as applications_self_service
+    count(distinct opportunity_candidates.id) as applications_general
 from
     opportunity_candidates
     inner join opportunities as o on opportunity_candidates.opportunity_id = o.id
@@ -15,6 +15,5 @@ from
 where
     date(opportunity_candidates.created) > "2021-7-18"
     AND o.objective not like '***%'
-    AND (o.fulfillment = 'self_service')
     AND opportunity_candidates.application_step IS NOT NULL
 group by 1,2
