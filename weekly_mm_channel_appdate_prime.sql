@@ -40,7 +40,7 @@ WHERE
         `Member Evaluations`.`interested` IS NOT NULL
         AND `source`.`interested` > "2021-7-18"
         AND `source`.`interested` < date(date_add(now(6), INTERVAL 1 day))
-        AND `source`.`Opportunities__fulfillment` = 'prime'
+        AND `source`.`Opportunities__fulfillment` like '%prime%'
         AND str_to_date(concat(yearweek(`Member Evaluations`.`interested`),' Sunday'),'%X%V %W') = str_to_date(concat(yearweek(`source`.`interested`), ' Sunday'),'%X%V %W')
     )
 GROUP BY

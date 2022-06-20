@@ -46,5 +46,5 @@ where
     'ja_rlvsgl_org',
     'ja_allsgl_org'
   )
-  and (o.fulfillment = 'prime')
+  and (o.fulfillment like '%prime%')
 group by 1,2,3,4

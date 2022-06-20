@@ -11,4 +11,4 @@ WHERE
       `opportunity_candidates__via__c`.`interested` IS NOT NULL
       AND `member_evaluations`.`interested` >= "2021-06-20"
    )
-   AND (`o`.`fulfillment` = 'prime')
+   AND (`o`.`fulfillment` like '%prime%')

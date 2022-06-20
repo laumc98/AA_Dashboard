@@ -13,7 +13,7 @@ WHERE
          date(`opportunity_operational_hires`.`hiring_date`),
          date(`Opportunities`.`reviewed`)
       ) <= 15
-      AND `Opportunities`.`fulfillment` = 'prime'
+      AND `Opportunities`.`fulfillment` like '%prime%'
    )
 GROUP BY
    str_to_date(concat(yearweek(`Opportunities`.`reviewed`),'Sunday'),'%X%V %W')

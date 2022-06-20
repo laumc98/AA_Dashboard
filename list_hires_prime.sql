@@ -22,4 +22,4 @@ WHERE
       )
       AND `opportunity_operational_hires`.`hiring_date` >= "2021-06-20"
    )
-   AND (`o`.`fulfillment` = 'prime')
+   AND (`o`.`fulfillment` like '%prime%')

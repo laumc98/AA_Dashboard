@@ -11,7 +11,7 @@ WHERE
       AND `opportunity_changes_history`.`value` = 0
       AND `opportunities__via__opportunit`.`reviewed` > "2021-7-18"
       AND `opportunities__via__opportunit`.`reviewed` < date(now(6))
-      AND `opportunities__via__opportunit`.`fulfillment` = 'prime'
+      AND `opportunities__via__opportunit`.`fulfillment` like '%prime%'
    )
 GROUP BY
    str_to_date(concat(yearweek(`opportunities__via__opportunit`.`reviewed`),' Sunday'),'%X%V %W')

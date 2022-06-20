@@ -15,7 +15,7 @@ WHERE
             `Opportunity Organizations`.`organization_id` <> 665801
             OR `Opportunity Organizations`.`organization_id` IS NULL
         )
-        AND `opportunities`.`fulfillment` = 'prime'
+        AND `opportunities`.`fulfillment` like '%prime%'
     )
 GROUP BY
     str_to_date(concat(yearweek(`opportunities`.`reviewed`), ' Sunday'),'%X%V %W')

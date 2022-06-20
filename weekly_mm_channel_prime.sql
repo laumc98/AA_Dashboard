@@ -40,7 +40,7 @@ WHERE
         AND `Member Evaluations`.`interested` < date(date_add(now(6), INTERVAL 1 day))
         AND `source`.`interested` >= date(date_add(now(6), INTERVAL -360 day))
         AND `source`.`interested` < date(date_add(now(6), INTERVAL 1 day))
-        AND `source`.`Opportunities__fulfillment` = 'prime'
+        AND `source`.`Opportunities__fulfillment` like '%prime%'
     )
 GROUP BY
     `source`.`Tracking Codes__utm_medium`,

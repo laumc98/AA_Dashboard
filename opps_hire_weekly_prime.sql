@@ -9,7 +9,7 @@ WHERE
    (
       `opportunity_operational_hires`.`hiring_date` > "2021-7-18"
       AND `opportunity_operational_hires`.`hiring_date` < date(now(6))
-      AND `Opportunities`.`fulfillment` = 'prime'
+      AND `Opportunities`.`fulfillment` like '%prime%'
    )
 GROUP BY
    str_to_date(concat(yearweek(`Opportunities`.`reviewed`),'Sunday'),'%X%V %W')
