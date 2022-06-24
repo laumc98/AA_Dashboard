@@ -1,14 +1,13 @@
 /* AA : AA Main dashboard : list mm prime : prod */ 
-SELECT
-   `member_evaluations`.`candidate_id` AS `candidate_id`,
-   `member_evaluations`.`interested` AS `MM_interested`
+SELECT 
+    occh.candidate_id AS candidate_id,
+    date(occh.created) AS MM_interested
 FROM
-   `member_evaluations`
-   LEFT JOIN `opportunity_candidates` `opportunity_candidates__via__c` ON `member_evaluations`.`candidate_id` = `opportunity_candidates__via__c`.`id`
-   LEFT JOIN `opportunities` `o` on `opportunity_candidates__via__c`.`opportunity_id` = `o`.`id`
+    opportunity_candidate_column_history occh
+    INNER JOIN opportunity_columns oc ON occh.to = oc.id
+    INNER JOIN opportunities o ON oc.opportunity_id = o.id
 WHERE
-   (
-      `opportunity_candidates__via__c`.`interested` IS NOT NULL
-      AND `member_evaluations`.`interested` >= "2021-06-20"
-   )
-   AND (`o`.`fulfillment` like '%prime%')
+    oc.name = 'mutual matches'
+    AND occh.created >= '2021-06-20'
+    AND o.objective NOT LIKE '**%'
+    AND o.fulfillment LIKE '%prime%'
