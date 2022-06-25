@@ -1,6 +1,6 @@
-/* AA : AA Main dashboard : weekly prime hires per channel by app date : prod */ 
+/* AA : AA Main dashboard : weekly prime hires per channel by mm date : prod */ 
 SELECT
-    str_to_date(concat(yearweek(`source`.`interested`), ' Sunday'),'%X%V %W') AS `date`,
+    str_to_date(concat(yearweek(`source`.`mm_date`), ' Sunday'),'%X%V %W') AS `date`,
     `source`.`opportunity_id` AS `ID`,
     `source`.`Tracking Codes__utm_medium` AS `Tracking Codes__utm_medium`,
     count(distinct `source`.`id`) AS `weekly_hires_channel_appdate_prime`
@@ -14,6 +14,7 @@ FROM
             `opportunity_candidates`.`opportunity_id` AS `opportunity_id`,
             `Tracking Codes`.`utm_medium` AS `Tracking Codes__utm_medium`,
             `Opportunities`.`remote` AS `Opportunities__remote`,
+            `opportunity_candidate_column_history`.`created` AS `mm_date`,
             `Opportunities`.`fulfillment` AS `Opportunities__fulfillment`
         FROM
             `opportunity_candidates`
@@ -24,6 +25,7 @@ FROM
             LEFT JOIN `people` `People` ON `opportunity_candidates`.`person_id` = `People`.`id`
             LEFT JOIN `opportunities` `Opportunities` ON `opportunity_candidates`.`opportunity_id` = `Opportunities`.`id`
             LEFT JOIN `opportunity_operational_hires` ON `opportunity_candidates`.`id` = `opportunity_operational_hires`.`opportunity_candidate_id`
+            LEFT JOIN `opportunity_candidate_column_history` ON `opportunity_candidates`.`id` = `opportunity_candidate_column_history`.`candidate_id`
         WHERE
             (
                 `Person Flags - Person`.`opportunity_crawler` = FALSE
@@ -38,15 +40,16 @@ FROM
 WHERE
     (
         `source`.`hiring_date` IS NOT NULL
-        AND `source`.`interested` > "2021-7-18"
-        AND `source`.`interested` < date(date_add(now(6), INTERVAL 1 day))
+        AND `source`.`mm_date` IS NOT NULL
+        AND `source`.`mm_date` > "2021-7-18"
+        AND `source`.`mm_date` < date(date_add(now(6), INTERVAL 1 day))
         AND `source`.`Opportunities__fulfillment` like '%prime%'
-        AND str_to_date(concat(yearweek(`source`.`hiring_date`),' Sunday'),'%X%V %W') = str_to_date(concat(yearweek(`source`.`interested`), ' Sunday'),'%X%V %W')
+        AND str_to_date(concat(yearweek(`source`.`hiring_date`),' Sunday'),'%X%V %W') = str_to_date(concat(yearweek(`source`.`mm_date`), ' Sunday'),'%X%V %W')
     )
 GROUP BY
-    str_to_date(concat(yearweek(`source`.`interested`), ' Sunday'),'%X%V %W'),
+    str_to_date(concat(yearweek(`source`.`mm_date`), ' Sunday'),'%X%V %W'),
     `source`.`Tracking Codes__utm_medium`,
     `source`.`opportunity_id`
 ORDER BY
-    str_to_date(concat(yearweek(`source`.`interested`), ' Sunday'),'%X%V %W') ASC,
+    str_to_date(concat(yearweek(`source`.`mm_date`), ' Sunday'),'%X%V %W') ASC,
     `source`.`Tracking Codes__utm_medium` ASC
