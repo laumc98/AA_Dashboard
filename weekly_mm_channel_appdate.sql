@@ -13,8 +13,9 @@ FROM
     LEFT JOIN tracking_codes tc ON tcc.tracking_code_id = tc.id
 WHERE
     oc.name = 'mutual matches'
-    AND occh.created >= '2021-07-18'
+    AND occh.created >= '2021-07-01'
     AND oca.interested IS NOT NULL
+    AND oca.retracted IS NULL
     AND str_to_date(concat(yearweek(occh.created), ' Sunday'),'%X%V %W') = str_to_date(concat(yearweek(oca.interested), ' Sunday'),'%X%V %W')
     AND o.objective NOT LIKE '**%'
     AND o.id IN (
