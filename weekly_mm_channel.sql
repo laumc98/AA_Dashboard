@@ -3,7 +3,7 @@ SELECT
     str_to_date(concat(yearweek(occh.created), ' Sunday'),'%X%V %W') AS 'date',
     oca.opportunity_id AS 'ID',
     tc.utm_medium AS 'Tracking Codes__utm_medium',
-    count(*) AS 'weekly_mm_channel'
+    count(distinct occh.candidate_id) AS 'weekly_mm_channel'
 FROM
     opportunity_candidate_column_history occh
     INNER JOIN opportunity_columns oc ON occh.to = oc.id
