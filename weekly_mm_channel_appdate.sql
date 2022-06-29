@@ -1,22 +1,21 @@
 /* AA : AA Main dashboard : weekly mm per channel by app date : prod */ 
 SELECT
     str_to_date(concat(yearweek(oca.interested), ' Sunday'),'%X%V %W') AS 'date',
-    oca.opportunity_id AS 'ID',
     tc.utm_medium AS 'Tracking Codes__utm_medium',
-    count(distinct occh.candidate_id) AS 'weekly_mm_channel_appdate'
+    oca.opportunity_id AS 'ID',
+    count(distinct oca.id) AS 'weekly_mm_channel_appdate'
 FROM
-    opportunity_candidate_column_history occh
-    INNER JOIN opportunity_columns oc ON occh.to = oc.id
-    INNER JOIN opportunities o ON oc.opportunity_id = o.id
-    LEFT JOIN opportunity_candidates oca ON occh.candidate_id = oca.id
+    opportunity_candidates oca 
+    INNER JOIN opportunities o ON oca.opportunity_id = o.id 
     LEFT JOIN tracking_code_candidates tcc ON oca.id = tcc.candidate_id
     LEFT JOIN tracking_codes tc ON tcc.tracking_code_id = tc.id
+    LEFT JOIN opportunity_candidate_column_history occh ON oca.id = occh.candidate_id
+    LEFT JOIN opportunity_columns oc ON occh.to = oc.id
 WHERE
-    oc.name = 'mutual matches'
-    AND occh.created >= '2021-07-01'
-    AND oca.interested IS NOT NULL
-    AND oca.retracted IS NULL
-    AND str_to_date(concat(yearweek(occh.created), ' Sunday'),'%X%V %W') = str_to_date(concat(yearweek(oca.interested), ' Sunday'),'%X%V %W')
+    oca.interested IS NOT NULL 
+    AND oc.name = 'mutual matches'
+    AND occh.created IS NOT NULL
+    AND oca.interested > '2021-7-18'
     AND o.objective NOT LIKE '**%'
     AND o.id IN (
         SELECT
@@ -32,9 +31,7 @@ WHERE
             AND o.objective NOT LIKE '**%'
             AND o.review = 'approved'
     )
-GROUP BY
+GROUP BY 
     str_to_date(concat(yearweek(oca.interested), ' Sunday'),'%X%V %W'),
     tc.utm_medium,
     oca.opportunity_id
-ORDER BY
-    str_to_date(concat(yearweek(oca.interested), ' Sunday'),'%X%V %W') ASC
