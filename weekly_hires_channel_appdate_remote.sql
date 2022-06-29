@@ -1,55 +1,41 @@
 /* AA : AA Main dashboard : weekly remote hires per channel by mm date : prod */ 
 SELECT
-    str_to_date(concat(yearweek(`source`.`mm_date`), ' Sunday'),'%X%V %W') AS `date`,
-    `source`.`opportunity_id` AS `ID`,
-    `source`.`Tracking Codes__utm_medium` AS `Tracking Codes__utm_medium`,
-    count(distinct `source`.`id`) AS `weekly_hires_channel_appdate_remote`
+    str_to_date(concat(yearweek(occh.created), ' Sunday'),'%X%V %W') AS 'date',
+    oca.opportunity_id AS 'ID',
+    tc.utm_medium AS 'Tracking Codes__utm_medium',
+    count(distinct occh.candidate_id) AS 'weekly_hires_channel_appdate_remote'
 FROM
-    (
-        SELECT
-            `opportunity_candidates`.`application_step` AS `application_step`,
-            `opportunity_candidates`.`id` AS `id`,
-            `opportunity_candidates`.`interested` AS `interested`,
-            `opportunity_operational_hires`.`hiring_date` AS `hiring_date`,
-            `opportunity_candidates`.`opportunity_id` AS `opportunity_id`,
-            `Tracking Codes`.`utm_medium` AS `Tracking Codes__utm_medium`,
-            `Opportunities`.`remote` AS `Opportunities__remote`,
-            `opportunity_candidate_column_history`.`created` AS `mm_date`,
-            `Opportunities`.`fulfillment` AS `Opportunities__fulfillment`
-        FROM
-            `opportunity_candidates`
-            LEFT JOIN `tracking_code_candidates` `Tracking Code Candidates` ON `opportunity_candidates`.`id` = `Tracking Code Candidates`.`candidate_id`
-            LEFT JOIN `tracking_codes` `Tracking Codes` ON `Tracking Code Candidates`.`tracking_code_id` = `Tracking Codes`.`id`
-            LEFT JOIN `opportunity_members` `Opportunity Members - Opportunity` ON `opportunity_candidates`.`opportunity_id` = `Opportunity Members - Opportunity`.`opportunity_id`
-            LEFT JOIN `person_flags` `Person Flags - Person` ON `Opportunity Members - Opportunity`.`person_id` = `Person Flags - Person`.`person_id`
-            LEFT JOIN `people` `People` ON `opportunity_candidates`.`person_id` = `People`.`id`
-            LEFT JOIN `opportunities` `Opportunities` ON `opportunity_candidates`.`opportunity_id` = `Opportunities`.`id`
-            LEFT JOIN `opportunity_operational_hires` ON `opportunity_candidates`.`id` = `opportunity_operational_hires`.`opportunity_candidate_id`
-            LEFT JOIN `opportunity_candidate_column_history` ON `opportunity_candidates`.`id` = `opportunity_candidate_column_history`.`candidate_id`
-        WHERE
-            (
-                `Person Flags - Person`.`opportunity_crawler` = FALSE
-                AND `Opportunity Members - Opportunity`.`poster` = TRUE
-                AND (
-                    NOT (lower(`People`.`username`) like '%test%')
-                    OR `People`.`username` IS NULL
-                )
-                AND `opportunity_candidates`.`retracted` IS NULL
-            )
-    ) `source`
+    opportunity_candidate_column_history occh
+    INNER JOIN opportunity_columns oc ON occh.to = oc.id
+    INNER JOIN opportunities o ON oc.opportunity_id = o.id
+    LEFT JOIN opportunity_candidates oca ON occh.candidate_id = oca.id
+    LEFT JOIN tracking_code_candidates tcc ON oca.id = tcc.candidate_id
+    LEFT JOIN tracking_codes tc ON tcc.tracking_code_id = tc.id
+    LEFT JOIN opportunity_operational_hires ooh ON occh.candidate_id = ooh.opportunity_candidate_id
 WHERE
-    (
-        `source`.`hiring_date` IS NOT NULL
-        AND `source`.`mm_date` IS NOT NULL
-        AND `source`.`mm_date` > "2021-7-18"
-        AND `source`.`mm_date` < date(date_add(now(6), INTERVAL 1 day))
-        AND `source`.`Opportunities__remote` = 1
-        AND str_to_date(concat(yearweek(`source`.`hiring_date`),' Sunday'),'%X%V %W') = str_to_date(concat(yearweek(`source`.`mm_date`), ' Sunday'),'%X%V %W')
+    oc.name = 'mutual matches'
+    AND occh.created >= '2021-7-18'
+    AND oca.interested IS NOT NULL
+    AND ooh.hiring_date IS NOT NULL
+    AND o.objective NOT LIKE '**%'
+    AND o.id IN (
+        SELECT
+            DISTINCT o.id AS opportunity_id
+        FROM
+            opportunities o
+            INNER JOIN opportunity_members omp ON omp.opportunity_id = o.id
+            AND omp.poster = TRUE
+            INNER JOIN person_flags pf ON pf.person_id = omp.person_id
+            AND pf.opportunity_crawler = FALSE
+        WHERE
+            o.reviewed >= '2021/01/01'
+            AND o.objective NOT LIKE '**%'
+            AND o.review = 'approved'
+            AND o.remote = 1
     )
 GROUP BY
-    str_to_date(concat(yearweek(`source`.`mm_date`), ' Sunday'),'%X%V %W'),
-    `source`.`Tracking Codes__utm_medium`,
-    `source`.`opportunity_id`
+    str_to_date(concat(yearweek(occh.created), ' Sunday'),'%X%V %W'),
+    tc.utm_medium,
+    oca.opportunity_id
 ORDER BY
-    str_to_date(concat(yearweek(`source`.`mm_date`), ' Sunday'),'%X%V %W') ASC,
-    `source`.`Tracking Codes__utm_medium` ASC
+    str_to_date(concat(yearweek(occh.created), ' Sunday'),'%X%V %W') ASC
