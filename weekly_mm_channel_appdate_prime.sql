@@ -1,8 +1,8 @@
 /* AA : AA Main dashboard : weekly prime mm per channel by app date : prod */ 
 SELECT
     str_to_date(concat(yearweek(oca.interested), ' Sunday'),'%X%V %W') AS 'date',
-    tc.utm_medium AS 'Tracking Codes__utm_medium',
     oca.opportunity_id AS 'ID',
+    tc.utm_medium AS 'Tracking Codes__utm_medium',
     count(distinct oca.id) AS 'weekly_mm_channel_appdate_prime'
 FROM
     opportunity_candidates oca 
