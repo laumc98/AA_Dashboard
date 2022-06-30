@@ -1,4 +1,4 @@
-/* AA : AA Main dashboard : weekly unsubmitted ats app per channel : prod */ 
+/* AA : AA Main dashboard : weekly unsubmitted ss app per channel : prod */ 
 select
   str_to_date(concat(yearweek(`opportunity_candidates`.`created`),' Sunday'),'%X%V %W') as date,
   opportunity_candidates.opportunity_id AS ID,
@@ -47,5 +47,5 @@ where
     'ja_rlvsgl_org',
     'ja_allsgl_org'
   )
-  and (o.fulfillment like '%ats%')
+  and (o.fulfillment like '%self_service%')
 group by 1,2,3,4
