@@ -17,6 +17,7 @@ from
 where
   date(opportunity_candidates.created) > "2021-7-18"
   AND o.objective not like '***%'
+  AND opportunity_candidates.application_step IS NOT NULL
   and tc.utm_medium in (
     'srh_jobs',
     'ja_mtc',
