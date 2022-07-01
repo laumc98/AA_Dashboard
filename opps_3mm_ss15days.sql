@@ -44,6 +44,7 @@ FROM
                                     oc.name = 'mutual matches'
                                     AND occh.created >= '2021-01-01'
                                     AND o.fulfillment like '%self_service%'
+                                    AND datediff(date(occh.created), date(o.reviewed)) > 7
                                     AND datediff(date(occh.created), date(o.reviewed)) <= 15
                                     AND o.objective NOT LIKE '**%'
                                     AND o.id NOT IN (
@@ -127,6 +128,7 @@ FROM
                                     oc.name = 'mutual matches'
                                     AND occh.created >= '2021-01-01'
                                     AND o.fulfillment like '%self_service%'
+                                    AND datediff(date(occh.created), date(o.reviewed)) > 7
                                     AND datediff(date(occh.created), date(o.reviewed)) <= 15
                                     AND o.objective NOT LIKE '**%'
                                     AND o.id NOT IN (

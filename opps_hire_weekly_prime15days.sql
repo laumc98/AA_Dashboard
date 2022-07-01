@@ -12,6 +12,10 @@ WHERE
       AND datediff(
          date(`opportunity_operational_hires`.`hiring_date`),
          date(`Opportunities`.`reviewed`)
+      ) > 7
+      AND datediff(
+         date(`opportunity_operational_hires`.`hiring_date`),
+         date(`Opportunities`.`reviewed`)
       ) <= 15
       AND `Opportunities`.`fulfillment` like '%prime%'
    )
