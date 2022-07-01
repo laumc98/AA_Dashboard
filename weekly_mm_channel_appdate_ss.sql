@@ -17,6 +17,7 @@ WHERE
     AND occh.created IS NOT NULL
     AND oca.interested > '2021-7-18'
     AND o.objective NOT LIKE '**%'
+    AND oca.application_step IS NOT NULL
     AND o.id IN (
         SELECT
             DISTINCT o.id AS opportunity_id

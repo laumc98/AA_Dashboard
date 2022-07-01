@@ -18,6 +18,7 @@ WHERE
     AND oca.interested IS NOT NULL
     AND ooh.hiring_date IS NOT NULL
     AND o.objective NOT LIKE '**%'
+    AND oca.application_step IS NOT NULL
     AND o.id IN (
         SELECT
             DISTINCT o.id AS opportunity_id

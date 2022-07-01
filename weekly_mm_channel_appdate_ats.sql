@@ -16,6 +16,7 @@ WHERE
     AND oc.name = 'mutual matches'
     AND occh.created IS NOT NULL
     AND oca.interested > '2021-7-18'
+    AND oca.application_step IS NOT NULL
     AND o.objective NOT LIKE '**%'
     AND o.id IN (
         SELECT

@@ -17,6 +17,7 @@ WHERE
     AND occh.created >= '2021-7-18'
     AND oca.interested IS NOT NULL
     AND ooh.hiring_date IS NOT NULL
+    AND oca.application_step IS NOT NULL
     AND o.objective NOT LIKE '**%'
     AND o.id IN (
         SELECT

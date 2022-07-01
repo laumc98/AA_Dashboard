@@ -13,6 +13,7 @@ WHERE
     oc.interested IS NOT NULL 
     AND oc.interested > '2021-7-18'
     AND o.objective NOT LIKE '**%'
+    AND oc.application_step IS NOT NULL
     AND o.id IN (
         SELECT
             DISTINCT o.id AS opportunity_id
