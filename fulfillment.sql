@@ -1,7 +1,9 @@
 /* AA : AA Main dashboard : Opp's fulfillment : prod */
 SELECT
-    o.id AS ID,
-    o.fulfillment
+    o.id,
+    o.fulfillment,
+    (SELECT p.name FROM people p WHERE o.applicant_coordinator_person_id=p.id) as AAC,
+    (SELECT p.name FROM opportunity_members omp LEFT JOIN people p ON omp.person_id = p.id WHERE omp.tso_operator = TRUE AND omp.opportunity_id = o.id) as DR
 FROM
     opportunities o
 WHERE
