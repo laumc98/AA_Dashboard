@@ -13,6 +13,7 @@ WHERE
          date(`opportunity_operational_hires`.`hiring_date`),
          date(`Opportunities`.`reviewed`)
       ) <= 7
+      AND date(`Opportunities`.`reviewed`) <= date(date_add(now(6), INTERVAL -7 day))
    )
 GROUP BY
    str_to_date(concat(yearweek(`Opportunities`.`reviewed`),'Sunday'),'%X%V %W')

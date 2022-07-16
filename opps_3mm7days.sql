@@ -44,6 +44,7 @@ FROM
                                     oc.name = 'mutual matches'
                                     AND occh.created >= '2021-01-01'
                                     AND datediff(date(occh.created), date(o.reviewed)) <= 7
+                                    AND date(o.reviewed) <= date(date_add(now(6), INTERVAL -7 day))
                                     AND o.objective NOT LIKE '**%'
                                     AND o.id NOT IN (
                                         SELECT
@@ -126,6 +127,7 @@ FROM
                                     oc.name = 'mutual matches'
                                     AND occh.created >= '2021-01-01'
                                     AND datediff(date(occh.created), date(o.reviewed)) <= 7
+                                    AND date(o.reviewed) <= date(date_add(now(6), INTERVAL -7 day))
                                     AND o.objective NOT LIKE '**%'
                                     AND o.id NOT IN (
                                         SELECT

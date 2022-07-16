@@ -45,6 +45,7 @@ FROM
                                     AND occh.created >= '2021-01-01'
                                     AND datediff(date(occh.created), date(o.reviewed)) > 7
                                     AND datediff(date(occh.created), date(o.reviewed)) <= 15
+                                    AND date(o.reviewed) <= date(date_add(now(6), INTERVAL -15 day))
                                     AND o.objective NOT LIKE '**%'
                                     AND o.id NOT IN (
                                         SELECT
@@ -128,6 +129,7 @@ FROM
                                     AND occh.created >= '2021-01-01'
                                     AND datediff(date(occh.created), date(o.reviewed)) > 7
                                     AND datediff(date(occh.created), date(o.reviewed)) <= 15
+                                    AND date(o.reviewed) <= date(date_add(now(6), INTERVAL -15 day))
                                     AND o.objective NOT LIKE '**%'
                                     AND o.id NOT IN (
                                         SELECT
