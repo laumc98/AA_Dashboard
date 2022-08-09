@@ -1,7 +1,6 @@
 /* AA : AA Main dashboard : weekly unsubmitted app per channel : prod */ 
 select
   str_to_date(concat(yearweek(`opportunity_candidates`.`created`),' Sunday'),'%X%V %W') as date,
-  opportunity_candidates.opportunity_id AS ID,
   IF(ISNULL(interested), 'started', 'finished') as finished,
   tc.utm_medium as UTM,
   count(distinct opportunity_candidates.id) as applications
@@ -47,4 +46,4 @@ where
     'ja_rlvsgl_org',
     'ja_allsgl_org'
   )
-group by 1,2,3,4
+group by 1,2,3
