@@ -21,5 +21,5 @@ WHERE
          NOT (lower(`People`.`username`) like '%test%')
          OR `People`.`username` IS NULL
       )
-      AND `opportunity_operational_hires`.`hiring_date` >= "2021-06-20"
+      AND `opportunity_operational_hires`.`hiring_date` >= "2021-09-1"
    )

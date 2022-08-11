@@ -9,7 +9,7 @@ FROM
     INNER JOIN opportunities o ON oc.opportunity_id = o.id
 WHERE
     oc.name = 'mutual matches'
-    AND occh.created >= '2021-06-20'
+    AND occh.created >= '2021-09-1'
     AND o.objective NOT LIKE '**%'
     AND o.id IN (
         SELECT
