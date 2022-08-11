@@ -3,9 +3,11 @@ SELECT
    `People`.`subject_identifier` AS `SubjectID`,
    `opportunity_candidates`.`id` AS `id`,
    `opportunity_operational_hires`.`hiring_date` AS `hiring_date`,
+   `o`.`fulfillment`,
    `People`.`email` AS `email`
 FROM
    `opportunity_candidates`
+   LEFT JOIN `opportunities` `o` on `opportunity_candidates`.`opportunity_id` = `o`.`id`
    LEFT JOIN `opportunity_members` `Opportunity Members - Opportunity` ON `opportunity_candidates`.`opportunity_id` = `Opportunity Members - Opportunity`.`opportunity_id`
    LEFT JOIN `person_flags` `Person Flags - Person` ON `Opportunity Members - Opportunity`.`person_id` = `Person Flags - Person`.`person_id`
    LEFT JOIN `people` `People` ON `opportunity_candidates`.`person_id` = `People`.`id`

@@ -1,7 +1,8 @@
 /* AA : AA Main dashboard : list mm : prod */ 
 SELECT 
-    occh.candidate_id AS candidate_id,
-    date(occh.created) AS MM_interested
+    occh.candidate_id AS id,
+    date(occh.created) AS mm_interested,
+    o.fulfillment
 FROM
     opportunity_candidate_column_history occh
     INNER JOIN opportunity_columns oc ON occh.to = oc.id

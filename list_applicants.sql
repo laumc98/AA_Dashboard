@@ -1,6 +1,7 @@
 /* AA : AA Main dashboard : list app : prod */ 
 SELECT
    `People`.`subject_identifier` AS `SubjectID`,
+   `opportunity_candidates`.`id` AS `id`,
    `opportunity_candidates`.`interested` AS `interested`,
    `o`.`fulfillment`,
    `People`.`email` AS `email`
@@ -19,5 +20,5 @@ WHERE
          NOT (lower(`People`.`username`) like '%test%')
          OR `People`.`username` IS NULL
       )
-      AND `opportunity_candidates`.`interested` >= "2021-06-20"
+      AND `opportunity_candidates`.`interested` >= "2022-01-1"
    )
