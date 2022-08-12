@@ -1,5 +1,5 @@
-/* AA : AA Main dashboard : list mm : prod */ 
-SELECT 
+/* AA : AA Main dashboard : list mm : prod */
+SELECT
     occh.candidate_id AS id,
     date(occh.created) AS mm_interested,
     o.fulfillment
@@ -9,8 +9,11 @@ FROM
     INNER JOIN opportunities o ON oc.opportunity_id = o.id
 WHERE
     oc.name = 'mutual matches'
-    AND occh.created >= '2021-09-1'
     AND o.objective NOT LIKE '**%'
+    AND (
+        occh.created >= date(now(6))
+        AND occh.created < date(date_add(now(6), INTERVAL 1 day))
+    )
     AND o.id IN (
         SELECT
             DISTINCT o.id AS opportunity_id

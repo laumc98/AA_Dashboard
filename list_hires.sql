@@ -21,6 +21,7 @@ WHERE
          NOT (lower(`People`.`username`) like '%test%')
          OR `People`.`username` IS NULL
       )
-      AND `opportunity_operational_hires`.`hiring_date` >= "2021-09-1"
       AND `People`.`subject_identifier` IS NOT NULL
+      AND (`opportunity_operational_hires`.`hiring_date` >= date(now(6))
+            AND `opportunity_operational_hires`.`hiring_date` < date(date_add(now(6), INTERVAL 1 day)))
    )
