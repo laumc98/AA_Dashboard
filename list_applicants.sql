@@ -21,4 +21,5 @@ WHERE
          OR `People`.`username` IS NULL
       )
       AND `opportunity_candidates`.`interested` >= "2021-09-1"
+      AND `People`.`subject_identifier` IS NOT NULL
    )

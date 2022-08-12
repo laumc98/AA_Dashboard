@@ -22,4 +22,5 @@ WHERE
          OR `People`.`username` IS NULL
       )
       AND `opportunity_operational_hires`.`hiring_date` >= "2021-09-1"
+      AND `People`.`subject_identifier` IS NOT NULL
    )
