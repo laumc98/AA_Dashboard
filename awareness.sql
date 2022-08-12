@@ -5,4 +5,5 @@ SELECT
     `metrics_users`.`locale` as `locale`
 FROM
     `metrics_users`
-    LEFT JOIN `users_user` `Users User` ON `metrics_users`.`id` = `Users User`.`id`
+WHERE
+    `metrics_users`.`awareness_answer` <> 'unknown'
