@@ -21,6 +21,5 @@ WHERE
          OR `People`.`username` IS NULL
       )
       AND `People`.`subject_identifier` IS NOT NULL
-      AND (`opportunity_candidates`.`interested` >= date(now(6))
-            AND `opportunity_candidates`.`interested` < date(date_add(now(6), INTERVAL 1 day)))
+      AND `opportunity_candidates`.`interested` >= "2021-09-01"
    )
