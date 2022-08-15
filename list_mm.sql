@@ -10,7 +10,10 @@ FROM
 WHERE
     oc.name = 'mutual matches'
     AND o.objective NOT LIKE '**%'
-    AND occh.created >= "2021-09-01"
+    AND (
+        occh.created >= date(now(6))
+        AND occh.created < date(date_add(now(6), INTERVAL 1 day))
+    )
     AND o.id IN (
         SELECT
             DISTINCT o.id AS opportunity_id
