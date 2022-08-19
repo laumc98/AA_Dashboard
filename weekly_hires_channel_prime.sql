@@ -24,7 +24,6 @@ WHERE
             o.reviewed >= '2021/01/01'
             AND o.objective NOT LIKE '**%'
             AND o.review = 'approved'
-            AND o.remote = 1
             AND o.fulfillment LIKE '%prime%'
     )
 GROUP BY
