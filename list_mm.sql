@@ -1,7 +1,7 @@
 /* AA : AA Main dashboard : list mm : prod */
 SELECT
     occh.candidate_id AS id,
-    date(occh.created) AS mm_interested,
+    date(occh.created) AS date,
     o.fulfillment
 FROM
     opportunity_candidate_column_history occh
@@ -11,8 +11,7 @@ WHERE
     oc.name = 'mutual matches'
     AND o.objective NOT LIKE '**%'
     AND (
-        occh.created >= date(now(6))
-        AND occh.created < date(date_add(now(6), INTERVAL 1 day))
+        occh.created >= '2021-08-21'
     )
     AND o.id IN (
         SELECT

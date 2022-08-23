@@ -2,7 +2,7 @@
 SELECT
    `People`.`subject_identifier` AS `SubjectID`,
    `opportunity_candidates`.`id` AS `id`,
-   `opportunity_operational_hires`.`hiring_date` AS `hiring_date`,
+   `opportunity_operational_hires`.`hiring_date` AS `date`,
    `o`.`fulfillment`,
    `People`.`email` AS `email`
 FROM
@@ -22,6 +22,6 @@ WHERE
          OR `People`.`username` IS NULL
       )
       AND `People`.`subject_identifier` IS NOT NULL
-      AND (`opportunity_operational_hires`.`hiring_date` >= date(now(6))
-            AND `opportunity_operational_hires`.`hiring_date` < date(date_add(now(6), INTERVAL 1 day)))
+      AND (`opportunity_operational_hires`.`hiring_date` >= '2021-08-21'
+         )
    )
