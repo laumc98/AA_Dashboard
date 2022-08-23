@@ -2,7 +2,7 @@
 SELECT
    `People`.`subject_identifier` AS `SubjectID`,
    `opportunity_candidates`.`id` AS `id`,
-   `opportunity_operational_hires`.`hiring_date` AS `date`,
+   date(`opportunity_operational_hires`.`hiring_date`) AS `date`,
    `o`.`fulfillment`,
    `People`.`email` AS `email`
 FROM
