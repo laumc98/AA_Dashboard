@@ -51,3 +51,4 @@ from
             ) as compensations
     ) as final
 where final.hire_value < '600000'
+group by hiring_date, utm

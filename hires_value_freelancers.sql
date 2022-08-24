@@ -1,4 +1,4 @@
-/* AA : AA Main dashboard : hires value ss : prod */ 
+/* AA : AA Main dashboard : hires value freelancers: prod */ 
 select
     str_to_date(concat(yearweek(hiring_date), ' Sunday'), '%X%V %W') as hiring_date,
     utm,
@@ -21,7 +21,7 @@ from
                 select
                     oc.periodicity,
                     osh.hiring_date,
-                    tc.utm_medium as utm,
+                    tc.utm_campaign as utm,
                     case
                         when oc.max_amount is not null then IF(
                             oc.currency = 'COP$',
@@ -39,10 +39,6 @@ from
                     inner join opportunities o on o.id = osh.opportunity_id
                     inner join opportunity_compensations oc on o.id = oc.opportunity_id
                     and oc.active
-                    and o.fulfillment like '%self_service%'
-                    inner join opportunity_organizations org on org.opportunity_id = o.id
-                    and org.organization_id != '748404'
-                    and org.active = true
                     inner join opportunity_candidates oca on (
                         oca.opportunity_id = osh.opportunity_id
                         and oca.id = osh.opportunity_candidate_id
@@ -52,6 +48,62 @@ from
                 where
                     oc.currency in ('COP$', 'USD$')
                     and osh.hiring_date is not null
+                    and tc.utm_campaign in (
+                    'jams',
+                    'lfrr',
+                    'mmam',
+                    'cals',
+                    'lfpa',
+                    'mmor',
+                    'smnb',
+                    'gco',
+                    'mabv',
+                    'rrp',
+                    'mmag',
+                    'jmmg',
+                    'dncg',
+                    'jngd',
+                    'mfp',
+                    'admp',
+                    'kjem',
+                    'mamg',
+                    'afdg',
+                    'xncs',
+                    'fcc',
+                    'ana',
+                    'erg',
+                    'mnmv',
+                    'mahp',
+                    'npd',
+                    'llcg',
+                    'lmmg',
+                    'mpsm',
+                    'lfpa_ra',
+                    'mmor_ra',
+                    'smnb_ra',
+                    'gco_ra',
+                    'mabv_ra',
+                    'rrp_ra',
+                    'mmag_ra',
+                    'jmmg_ra',
+                    'dncg_ra',
+                    'jngd_ra',
+                    'mfp_ra',
+                    'admp_ra',
+                    'kjem_ra',
+                    'mamg_ra',
+                    'afdg_ra',
+                    'xncs_ra',
+                    'fcc_ra',
+                    'ana_ra',
+                    'erg_ra',
+                    'mnmv_ra',
+                    'mahp_ra',
+                    'npd_ra',
+                    'llcg_ra',
+                    'lmmg_ra',
+                    'mpsm_ra'
+                    )
             ) as compensations
     ) as final
 where final.hire_value < '600000'
