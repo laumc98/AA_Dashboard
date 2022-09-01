@@ -12,11 +12,12 @@ FROM
             career_advisor
             LEFT JOIN people ON career_advisor.person_id = people.id
         WHERE
-            career_advisor.current = 'career-advisor-job-opportunity'
+            (career_advisor.current = 'career-advisor-job-opportunity'
+                OR career_advisor.current = 'career-advisor-invited-job-opportunity')
             AND career_advisor.notification_status = 'pending'
             AND career_advisor.active = true
             AND people.subject_identifier IS NULL
-            AND career_advisor.evaluate_at >= '2022-07-24'
+            AND career_advisor.evaluate_at >= '2022-07-17'
         GROUP BY
             str_to_date(concat(yearweek(career_advisor.evaluate_at), ' Sunday'),'%X%V %W')
     ) AS pending
@@ -28,11 +29,13 @@ FROM
             career_advisor
             LEFT JOIN people ON career_advisor.person_id = people.id
         WHERE
-            career_advisor.current = 'career-advisor-job-opportunity'
+            (career_advisor.current = 'career-advisor-job-opportunity'
+                OR career_advisor.current = 'career-advisor-invited-job-opportunity')
             AND career_advisor.notification_status = 'sent'
             AND career_advisor.active = false
             AND people.subject_identifier IS NULL
-            AND career_advisor.deleted >= '2022-07-24'
+            AND career_advisor.deleted >= '2022-07-17'
         GROUP BY
             str_to_date(concat(yearweek(career_advisor.evaluate_at), ' Sunday'),'%X%V %W')
     ) AS sent ON pending.date = sent.date
+GROUP BY 1,2
