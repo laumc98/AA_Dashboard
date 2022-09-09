@@ -9,8 +9,4 @@ FROM
     people
     LEFT JOIN person_location ON people.id = person_location.person_id
     LEFT JOIN person_stats ON people.id = person_stats.person_id
-WHERE
-    (
-        people.created >= '2021-1-01'
-    )
 ORDER BY people.id DESC

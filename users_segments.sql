@@ -6,8 +6,4 @@ SELECT
 FROM
     person_segments
     LEFT JOIN people ON person_segments.person_id = people.id
-WHERE
-    (
-        people.created >= '2021-1-01'
-    )
 ORDER BY people.gg_id DESC

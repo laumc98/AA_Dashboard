@@ -10,6 +10,5 @@ FROM
 WHERE
     (
         strengths.active = TRUE
-        AND people.created >= '2021-1-01'
     )
 ORDER BY strengths.person_id DESC
