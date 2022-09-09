@@ -11,6 +11,6 @@ FROM
     LEFT JOIN person_stats ON people.id = person_stats.person_id
 WHERE
     (
-        people.created >= '2021-6-01'
+        people.created >= '2021-1-01'
     )
 ORDER BY people.id DESC
