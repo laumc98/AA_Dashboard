@@ -8,7 +8,6 @@ FROM
     LEFT JOIN opportunities_preferences ON people.id = opportunities_preferences.person_id
 WHERE
     (
-        people.created >= '2021-1-01'
-        AND opportunities_preferences.interest IS NOT NULL 
+        opportunities_preferences.interest IS NOT NULL 
         AND people.verified IS NOT NULL
     )
