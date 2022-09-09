@@ -2,7 +2,7 @@
 SELECT
     people.gg_id AS `gg_id`,
     date(people.created) AS `date_signed_up`,
-    date(oc.created) AS `date_started_app`
+    min(date(oc.created)) AS `date_started_app`
 FROM
     people
     LEFT JOIN opportunity_candidates oc ON people.id = oc.person_id
