@@ -10,5 +10,6 @@ FROM
 WHERE
     (
         languages.active = TRUE
+        AND DATE(people.created) >= '2020-12-01'
     )
 ORDER BY languages.person_id DESC
