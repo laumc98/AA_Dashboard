@@ -9,7 +9,7 @@ FROM
 WHERE
     (
         oc.created IS NOT NULL
-        AND oc.created >= '2021-06-01'
+        AND oc.created >= date(date_add(now(6), INTERVAL -360 day))
         AND people.verified = TRUE
     )
 GROUP BY gg_id
