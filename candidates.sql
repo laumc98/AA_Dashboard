@@ -9,6 +9,6 @@ FROM
 WHERE
     (
         opportunities_preferences.interest IS NOT NULL 
-        AND DATE(people.created) >= '2021-01-01'
+        AND DATE(people.created) >= '2021-06-01'
         AND people.verified IS NOT NULL
     )

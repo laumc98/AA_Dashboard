@@ -10,5 +10,5 @@ FROM
     LEFT JOIN person_location ON people.id = person_location.person_id
     LEFT JOIN person_stats ON people.id = person_stats.person_id
 WHERE 
-    DATE(people.created) >= '2020-12-01'
+    DATE(people.created) >= '2021-06-01'
 ORDER BY people.id DESC
