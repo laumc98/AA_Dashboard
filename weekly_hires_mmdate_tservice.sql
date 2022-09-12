@@ -12,7 +12,7 @@ SELECT
     ) AS general_hires_mmdate,
     sum(
         if(
-            general.fulfillment LIKE '%prime%',
+            (general.fulfillment LIKE '%prime%' or general.fulfillment LIKE '%agile%'),
             general.hires,
             0
         )

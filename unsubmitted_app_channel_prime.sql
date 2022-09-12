@@ -46,5 +46,5 @@ where
     'ja_rlvsgl_org',
     'ja_allsgl_org'
   )
-  and (o.fulfillment like '%prime%')
+  and (o.fulfillment like '%prime%' or o.fulfillment like '%agile%')
 group by 1,2,3

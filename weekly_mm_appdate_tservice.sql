@@ -12,7 +12,7 @@ SELECT
     ) AS general_mm_appdate,
     sum(
         if(
-            general.fulfillment LIKE '%prime%',
+            (general.fulfillment LIKE '%prime%' or general.fulfillment LIKE '%agile%'),
             general.mutual_matches,
             0
         )

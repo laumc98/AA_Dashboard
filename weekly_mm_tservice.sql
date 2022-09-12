@@ -11,7 +11,7 @@ SELECT
     ) AS general_mm,
     sum(
         if(
-            general.fulfillment LIKE '%prime%',
+            (general.fulfillment LIKE '%prime%' or general.fulfillment LIKE '%agile%'),
             general.mutuals,
             0
         )

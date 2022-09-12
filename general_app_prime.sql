@@ -15,7 +15,7 @@ from
 where
     date(opportunity_candidates.created) > "2021-7-18"
     AND o.objective not like '***%'
-    AND (o.fulfillment like '%prime%')
+    AND (o.fulfillment like '%prime%' OR o.fulfillment like '%agile%')
     AND opportunity_candidates.application_step IS NOT NULL
     AND o.id NOT IN (
         SELECT

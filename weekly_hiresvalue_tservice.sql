@@ -12,7 +12,7 @@ select
     ) AS general_hiresvalue,
     sum(
         if(
-            final.fulfillment LIKE '%prime%',
+            (final.fulfillment LIKE '%prime%' or final.fulfillment LIKE '%agile%'), 
             final.hire_value,
             0
         )
