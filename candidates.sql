@@ -10,6 +10,6 @@ FROM
 WHERE
     (
         opportunities_preferences.interest IS NOT NULL 
-        AND DATE(people.created) > '2021-08-01'
+        AND DATE(people.created) >= date(date_add(now(6), INTERVAL -400 day))
         AND people.verified IS NOT NULL
     )
