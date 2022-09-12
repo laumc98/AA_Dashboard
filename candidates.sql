@@ -1,6 +1,7 @@
 /* AA : Users segmentation: candidates : prod */ 
 SELECT
     people.gg_id AS `gg_id`,
+    people.subject_identifier AS `id`,
     people.id AS `Person ID`,
     date(people.created) AS `date_signed_up`
 FROM
@@ -9,6 +10,6 @@ FROM
 WHERE
     (
         opportunities_preferences.interest IS NOT NULL 
-        AND DATE(people.created) >= date(date_add(now(6), INTERVAL -360 day))
+        AND DATE(people.created) > '2021-08-01'
         AND people.verified IS NOT NULL
     )

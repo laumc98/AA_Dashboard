@@ -1,7 +1,7 @@
 /* AA : Users segmentation: applicants : prod */ 
 SELECT
     people.gg_id AS `gg_id`,
-    date(people.created) AS `date_signed_up`,
+    people.subject_identifier AS `id`,
     min(date(oc.created)) AS `date_started_app`
 FROM
     people
@@ -9,8 +9,8 @@ FROM
 WHERE
     (
         oc.created IS NOT NULL
-        AND oc.created >= date(date_add(now(6), INTERVAL -360 day))
+        AND date(oc.created) > '2021-08-01'
         AND people.verified = TRUE
     )
 GROUP BY gg_id
-ORDER BY Date_Signed_up ASC
+ORDER BY date_started_app ASC

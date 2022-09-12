@@ -10,6 +10,6 @@ FROM
 WHERE
     (
         strengths.active = TRUE
-        AND DATE(people.created) >= date(date_add(now(6), INTERVAL -200 day))
+        AND DATE(people.created) > '2021-08-01'
     )
 ORDER BY strengths.person_id DESC
