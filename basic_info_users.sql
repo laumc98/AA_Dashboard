@@ -10,5 +10,5 @@ FROM
     LEFT JOIN person_location ON people.id = person_location.person_id
     LEFT JOIN person_stats ON people.id = person_stats.person_id
 WHERE 
-    DATE(people.created) >= date(date_add(now(6), INTERVAL -400 day))
+    DATE(people.created) >= date(date_add(now(6), INTERVAL -366 day))
 ORDER BY people.id DESC

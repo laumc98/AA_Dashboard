@@ -12,6 +12,6 @@ WHERE
     (
         strengths.active = TRUE
         AND strengths.proficiency IS NOT NULL
-        AND DATE(people.created) >= date(date_add(now(6), INTERVAL -200 day))
+        AND DATE(people.created) >= date(date_add(now(6), INTERVAL -180 day))
     )
 ORDER BY people.created asc
