@@ -1,7 +1,6 @@
 /* AA : Users segmentation: skills: prod */ 
 SELECT
     people.gg_id AS `gg_id`,
-    people.created,
     strengths.person_id AS `Person ID`,
     strengths.code AS `Skill ID`,
     strengths.proficiency AS `Skill_proficiency`
