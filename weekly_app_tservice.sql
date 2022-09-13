@@ -4,15 +4,18 @@ SELECT
     sum(
         if(
             general.fulfillment LIKE '%prime%'
+            or general.fulfillment LIKE '%agile%'
             or general.fulfillment LIKE '%ats%'
-            or general.fulfillment LIKE '%self_service%',
+            or general.fulfillment LIKE '%self_service%'
+            or general.fulfillment LIKE '%essentials%',
             general.applications,
             0
         )
     ) AS general_app,
     sum(
         if(
-            general.fulfillment LIKE '%prime%',
+            general.fulfillment LIKE '%prime%'
+            or general.fulfillment LIKE '%agile%',
             general.applications,
             0
         )
@@ -26,7 +29,8 @@ SELECT
     ) AS ats_app,
     sum(
         if(
-            general.fulfillment LIKE '%self_service%',
+            general.fulfillment LIKE '%self_service%'
+            or general.fulfillment LIKE '%essentials%',
             general.applications,
             0
         )

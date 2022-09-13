@@ -43,7 +43,7 @@ FROM
                                 WHERE
                                     oc.name = 'mutual matches'
                                     AND occh.created >= '2021-01-01'
-                                    AND o.fulfillment like '%self_service%'
+                                    AND (o.fulfillment like '%self_service%' or o.fulfillment like '%essentials%')
                                     AND datediff(date(occh.created), date(o.reviewed)) <= 7
                                     AND o.objective NOT LIKE '**%'
                                     AND o.id NOT IN (
@@ -126,7 +126,7 @@ FROM
                                 WHERE
                                     oc.name = 'mutual matches'
                                     AND occh.created >= '2021-01-01'
-                                    AND o.fulfillment like '%self_service%'
+                                    AND (o.fulfillment like '%self_service%' or o.fulfillment like '%essentials%')
                                     AND datediff(date(occh.created), date(o.reviewed)) <= 7
                                     AND o.objective NOT LIKE '**%'
                                     AND o.id NOT IN (

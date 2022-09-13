@@ -4,15 +4,17 @@ SELECT
     sum(
         if(
             general.fulfillment LIKE '%prime%'
+            or general.fulfillment LIKE '%agile%'
             or general.fulfillment LIKE '%ats%'
-            or general.fulfillment LIKE '%self_service%',
+            or general.fulfillment LIKE '%self_service%'
+            or general.fulfillment LIKE '%essentials%',
             general.hires,
             0
         )
     ) AS general_hires,
     sum(
         if(
-            (general.fulfillment LIKE '%prime%' or general.fulfillment LIKE '%agile%'),,
+            (general.fulfillment LIKE '%prime%' or general.fulfillment LIKE '%agile%'),
             general.hires,
             0
         )
@@ -26,7 +28,7 @@ SELECT
     ) AS ats_hires,
     sum(
         if(
-            general.fulfillment LIKE '%self_service%',
+            (general.fulfillment LIKE '%self_service%' or general.fulfillment LIKE '%essentials%'),
             general.hires,
             0
         )

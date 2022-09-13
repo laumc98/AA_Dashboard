@@ -27,7 +27,7 @@ WHERE
             o.reviewed >= '2021/01/01'
             AND o.objective NOT LIKE '**%'
             AND o.review = 'approved'
-            AND o.fulfillment LIKE '%self_service%'
+            AND (o.fulfillment LIKE '%self_service%' or o.fulfillment LIKE '%essentials%')
     )
 GROUP BY 
     str_to_date(concat(yearweek(oc.interested), ' Sunday'),'%X%V %W'),

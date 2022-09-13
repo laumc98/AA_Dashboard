@@ -46,5 +46,5 @@ where
     'ja_rlvsgl_org',
     'ja_allsgl_org'
   )
-  and (o.fulfillment like '%self_service%')
+  and (o.fulfillment like '%self_service%' or o.fulfillment like '%essentials%')
 group by 1,2,3

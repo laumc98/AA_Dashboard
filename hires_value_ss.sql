@@ -39,7 +39,7 @@ from
                     inner join opportunities o on o.id = osh.opportunity_id
                     inner join opportunity_compensations oc on o.id = oc.opportunity_id
                     and oc.active
-                    and o.fulfillment like '%self_service%'
+                    and (o.fulfillment like '%self_service%' or o.fulfillment like '%essentials%')
                     inner join opportunity_organizations org on org.opportunity_id = o.id
                     and org.organization_id != '748404'
                     and org.active = true

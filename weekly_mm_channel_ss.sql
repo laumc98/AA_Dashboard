@@ -15,7 +15,7 @@ WHERE
     oc.name = 'mutual matches'
     AND occh.created >= '2021-07-18'
     AND oca.interested IS NOT NULL
-    AND o.fulfillment LIKE '%self_service%'
+    AND (o.fulfillment LIKE '%self_service%' or o.fulfillment LIKE '%essentials%')
     AND o.objective NOT LIKE '**%'
     AND o.id IN (
         SELECT

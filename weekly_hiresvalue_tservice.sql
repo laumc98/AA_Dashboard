@@ -4,8 +4,10 @@ select
     sum(
         if(
             final.fulfillment LIKE '%prime%'
+            or final.fulfillment LIKE '%agile%'
             or final.fulfillment  LIKE '%ats%'
-            or final.fulfillment  LIKE '%self_service%',
+            or final.fulfillment  LIKE '%self_service%'
+            or final.fulfillment  LIKE '%essentials%',
             final.hire_value,
             0
         )
@@ -26,7 +28,8 @@ select
     ) AS ats_hiresvalue,
     sum(
         if(
-            final.fulfillment LIKE '%self_service%',
+            final.fulfillment LIKE '%self_service%'
+            or final.fulfillment  LIKE '%essentials%',
             final.hire_value,
             0
         )

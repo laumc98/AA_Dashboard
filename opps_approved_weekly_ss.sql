@@ -15,7 +15,7 @@ WHERE
             `Opportunity Organizations`.`organization_id` <> 665801
             OR `Opportunity Organizations`.`organization_id` IS NULL
         )
-        AND `opportunities`.`fulfillment` like '%self_service%'
+        AND (`opportunities`.`fulfillment` like '%self_service%' or `opportunities`.`fulfillment` like '%essentials%' )
     )
 GROUP BY
     str_to_date(concat(yearweek(`opportunities`.`reviewed`), ' Sunday'),'%X%V %W')
