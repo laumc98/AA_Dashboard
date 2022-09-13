@@ -1,6 +1,7 @@
 /* AA : Users segmentation: skills: prod */ 
 SELECT
     people.gg_id AS `gg_id`,
+    people.created,
     strengths.person_id AS `Person ID`,
     strengths.code AS `Skill ID`,
     strengths.proficiency AS `Skill_proficiency`
@@ -10,6 +11,7 @@ FROM
 WHERE
     (
         strengths.active = TRUE
+        AND strengths.proficiency IS NOT NULL
         AND DATE(people.created) >= date(date_add(now(6), INTERVAL -200 day))
     )
-ORDER BY strengths.person_id DESC
+ORDER BY people.created asc
