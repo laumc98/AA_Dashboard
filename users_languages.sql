@@ -10,6 +10,6 @@ FROM
 WHERE
     (
         languages.active = TRUE
-        AND DATE(people.created) >= date(date_add(now(6), INTERVAL -360 day))
+        AND DATE(people.created) >= date(date_add(now(6), INTERVAL -300 day))
     )
 ORDER BY languages.person_id DESC
