@@ -12,5 +12,5 @@ FROM
     LEFT JOIN person_stats ON people.id = person_stats.person_id
     LEFT JOIN opportunities_preferences ON people.id = opportunities_preferences.person_id
 WHERE 
-    DATE(people.created) >= date(date_add(now(6), INTERVAL -300 day))
+    DATE(people.created) >= date(date_add(now(6), INTERVAL -280 day))
 ORDER BY people.id DESC
