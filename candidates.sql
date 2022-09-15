@@ -14,6 +14,6 @@ WHERE
             OR opportunities_preferences.interest = 'jobs-part-time'
             OR opportunities_preferences.interest = 'gigs'
             OR opportunities_preferences.interest = 'internships')
-        AND DATE(people.created) >= date(date_add(now(6), INTERVAL -366 day))
+        AND DATE(people.created) >= date(date_add(now(6), INTERVAL -360 day))
         AND people.verified IS NOT NULL
     )

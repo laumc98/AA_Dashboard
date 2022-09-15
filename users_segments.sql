@@ -7,5 +7,5 @@ FROM
     person_segments
     LEFT JOIN people ON person_segments.person_id = people.id
 WHERE
-    DATE(people.created) >= date(date_add(now(6), INTERVAL -366 day))
+    DATE(people.created) >= date(date_add(now(6), INTERVAL -360 day))
 ORDER BY people.gg_id DESC
