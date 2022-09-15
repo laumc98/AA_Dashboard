@@ -9,8 +9,7 @@ FROM
     LEFT JOIN opportunities_preferences ON people.id = opportunities_preferences.person_id
 WHERE
     (
-        opportunities_preferences.interest IS NOT NULL 
-        AND (opportunities_preferences.interest = 'jobs-full-time'
+        (opportunities_preferences.interest = 'jobs-full-time'
             OR opportunities_preferences.interest = 'jobs-part-time'
             OR opportunities_preferences.interest = 'gigs'
             OR opportunities_preferences.interest = 'internships')
