@@ -7,7 +7,7 @@ SELECT
     o.commitment_id as 't_preference',
     o.locale as 'post_language',
     o.remote as 'remote',
-    opportunity_segments.name as segment as 'segment',
+    opportunity_segments.name as 'segment',
     opportunity_languages.language_code as 'languages',
     opportunity_languages.fluency as 'languages_fluency',
     opportunity_compensations.currency as 'currency',
