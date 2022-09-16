@@ -23,5 +23,5 @@ FROM
     LEFT JOIN opportunity_segments ON o.id = opportunity_segments.opportunity_id
     LEFT JOIN opportunity_languages ON o.id = opportunity_languages.opportunity_id
 WHERE 
-    date(o.reviewed) > '2021-08-01'
+    date(o.reviewed) > '2021-09-01'
     AND o.review = 'approved'
