@@ -16,3 +16,4 @@ WHERE
         AND DATE(people.created) >= date(date_add(now(6), INTERVAL -200 day))
         AND people.verified IS NOT NULL
     )
+GROUP BY people.gg_id
