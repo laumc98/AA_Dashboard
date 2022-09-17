@@ -1,7 +1,7 @@
 /* AA : Users segmentation: jobs_segmentation : prod */ 
 SELECT 
     o.id,
-    o.reviewed as 'approved_date',
+    date(o.reviewed) as 'approved_date',
     o.fulfillment as 't_service',
     o.opportunity as 't_job',
     o.commitment_id as 't_preference',
