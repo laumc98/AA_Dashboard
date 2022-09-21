@@ -10,18 +10,36 @@ SELECT
     opportunity_segments.name as 'segment',
     opportunity_languages.language_code as 'languages',
     opportunity_languages.fluency as 'languages_fluency',
-    opportunity_compensations.currency as 'currency',
-    opportunity_compensations.max_amount as 'max_amount_compensation',
-    opportunity_compensations.min_amount as 'min_amount_compensation',
-    opportunity_compensations.periodicity as 'compensation_periodicity',
     opportunity_strengths.code as 'Skill ID',
-    opportunity_strengths.proficiency as 'skill_proficiency'
+    opportunity_strengths.proficiency as 'skill_proficiency',
+    compensation.currency AS 'currency',
+    CASE
+        compensation.periodicity
+        WHEN 'yearly' THEN compensation.value/12
+        WHEN 'monthly' THEN compensation.value
+        WHEN 'weekly' THEN compensation.value * 4
+        WHEN 'daily' THEN compensation.value * 20
+        WHEN 'hourly' THEN compensation.value * 160
+        WHEN 'project' THEN compensation.value
+    END AS monthly_value
 FROM
     opportunities o
-    LEFT JOIN opportunity_compensations ON o.id = opportunity_compensations.opportunity_id AND opportunity_compensations.active = true
     LEFT JOIN opportunity_strengths ON o.id = opportunity_strengths.opportunity_id
     LEFT JOIN opportunity_segments ON o.id = opportunity_segments.opportunity_id
     LEFT JOIN opportunity_languages ON o.id = opportunity_languages.opportunity_id
+    LEFT JOIN (
+        SELECT
+            opportunity_compensations.opportunity_id,
+            SUBSTR(opportunity_compensations.currency, 1, 3) AS 'currency',
+            opportunity_compensations.periodicity,
+            COALESCE(NULLIF(opportunity_compensations.max_amount,0), opportunity_compensations.min_amount) AS value
+        FROM
+            opportunity_compensations
+        WHERE 
+            opportunity_compensations.active = true
+        GROUP BY
+            opportunity_compensations.opportunity_id
+    ) AS compensation ON o.id = compensation.opportunity_id
 WHERE 
     date(o.reviewed) > '2022-1-20'
     AND o.review = 'approved'
