@@ -41,5 +41,5 @@ FROM
             opportunity_compensations.opportunity_id
     ) AS compensation ON o.id = compensation.opportunity_id
 WHERE 
-    date(o.reviewed) > '2022-1-20'
+    date(o.reviewed) > '2022-2-1'
     AND o.review = 'approved'
