@@ -1,54 +1,45 @@
 /* AA : AA Main dashboard : hires value : prod */ 
-select
-    str_to_date(concat(yearweek(hiring_date), ' Sunday'), '%X%V %W') as hiring_date,
-    utm,
-    final.hire_value  as weekly_from_TSO
-from
+SELECT
+    date(hiring_date) AS hiring_date,
+    fulfillment,
+    utm_medium AS UTM,
+    SUBSTR(currency, 1, 3) AS currency_code,
+    CASE
+        periodicity
+        WHEN 'yearly' THEN value
+        WHEN 'monthly' THEN value * 12
+        WHEN 'weekly' THEN value * 48
+        WHEN 'daily' THEN value * 240
+        WHEN 'hourly' THEN value * 1920
+        WHEN 'project' THEN value
+    END AS yearly_value
+FROM
     (
-        select
-            compensations.hiring_date,
-            compensations.utm,
-            case
-                when compensations.periodicity = 'yearly' then dollars
-                when compensations.periodicity = 'monthly' then dollars * 12
-                when compensations.periodicity = 'weekly' then dollars * 48
-                when compensations.periodicity = 'daily' then dollars * 240
-                when compensations.periodicity = 'hourly' then dollars * 1920
-                when compensations.periodicity = 'project' then dollars
-            end as hire_value
-        from
-            (
-                select
-                    oc.periodicity,
-                    osh.hiring_date,
-                    tc.utm_medium as utm,
-                    case
-                        when oc.max_amount is not null then IF(
-                            oc.currency = 'COP$',
-                            oc.max_amount / 4000,
-                            oc.max_amount
-                        )
-                        else IF(
-                            oc.currency = 'COP$',
-                            oc.min_amount / 4000,
-                            oc.min_amount
-                        )
-                    end as dollars
-                from
-                    opportunity_operational_hires osh
-                    inner join opportunities o on o.id = osh.opportunity_id
-                    inner join opportunity_compensations oc on o.id = oc.opportunity_id
-                    and oc.active
-                    inner join opportunity_candidates oca on (
-                        oca.opportunity_id = osh.opportunity_id
-                        and oca.id = osh.opportunity_candidate_id
-                    )
-                    left join tracking_code_candidates tcc on tcc.candidate_id = oca.id
-                    left join tracking_codes tc on tc.id = tcc.tracking_code_id
-                where
-                    oc.currency in ('COP$', 'USD$')
-                    and osh.hiring_date is not null
-            ) as compensations
-    ) as final
-where final.hire_value < '600000'
-group by hiring_date, utm
+        SELECT
+            ooh.id AS hire_id,
+            oc.periodicity,
+            oc.currency,
+            ooh.hiring_date,
+            o.fulfillment,
+            tc.utm_medium,
+            COALESCE(NULLIF(oc.max_amount,0), oc.min_amount) AS value
+        FROM
+            opportunity_operational_hires ooh
+        INNER JOIN opportunities o ON o.id = ooh.opportunity_id
+        INNER JOIN opportunity_compensations oc ON o.id = oc.opportunity_id AND oc.active
+        INNER JOIN opportunity_candidates oca ON (oca.opportunity_id = ooh.opportunity_id AND oca.id = ooh.opportunity_candidate_id)
+        LEFT JOIN tracking_code_candidates tcc ON tcc.candidate_id = oca.id
+        LEFT JOIN tracking_codes tc ON tc.id = tcc.tracking_code_id 
+        WHERE
+            o.id NOT IN (1861230, 1316677)
+            AND o.id NOT IN (
+                SELECT
+                    DISTINCT opportunity_id
+                FROM
+                    opportunity_organizations
+                WHERE
+                    organization_id = 748404
+                    AND active
+            )
+            AND o.objective not like '**%'
+    ) AS compensations
