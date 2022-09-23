@@ -1,6 +1,6 @@
 /* AA : AA Main dashboard : weekly app by type of service : prod */
 SELECT
-    str_to_date(concat(yearweek(general.interested), ' Sunday'),'%X%V %W') AS date,
+    str_to_date(concat(yearweek(general.interested), 'Monday'),'%X%V %W') AS date,
     sum(
         if(
             general.fulfillment LIKE '%prime%'

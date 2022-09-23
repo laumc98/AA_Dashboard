@@ -1,6 +1,6 @@
 /* AA : AA Main dashboard : weekly unsubmitted by type of service: prod */ 
 select
-    str_to_date(concat(yearweek(unsubmitted_date), ' Sunday'),'%X%V %W') as date,
+    str_to_date(concat(yearweek(unsubmitted_date), 'Monday'),'%X%V %W') as date,
     general.finished,
     sum(
         if(
