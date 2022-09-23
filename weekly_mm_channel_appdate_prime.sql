@@ -31,7 +31,7 @@ WHERE
             o.reviewed >= '2021/01/01'
             AND o.objective NOT LIKE '**%'
             AND o.review = 'approved'
-            AND (o.fulfillment LIKE '%prime%' or o.fulfillment LIKE '%agile%')
+            AND (o.fulfillment LIKE '%prime%' or o.fulfillment LIKE '%agile%' or o.fulfillment LIKE '%staff_augmentation%')
     )
 GROUP BY 
     str_to_date(concat(yearweek(oca.interested), ' Sunday'),'%X%V %W'),

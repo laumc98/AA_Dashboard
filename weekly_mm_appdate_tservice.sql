@@ -8,13 +8,15 @@ SELECT
             or general.fulfillment LIKE '%ats%'
             or general.fulfillment LIKE '%self_service%'
             or general.fulfillment LIKE '%essentials%',
+            or general.fulfillment  like '%staff_augmentation%',
+            or general.fulfillment  like '%pro%',
             general.mutual_matches,
             0
         )
     ) AS general_mm_appdate,
     sum(
         if(
-            (general.fulfillment LIKE '%prime%' or general.fulfillment LIKE '%agile%'),
+            (general.fulfillment LIKE '%prime%' or general.fulfillment LIKE '%agile%' or general.fulfillment  like '%staff_augmentation%'),
             general.mutual_matches,
             0
         )

@@ -103,7 +103,7 @@ FROM
                                    WHERE
                                          oc.name = 'mutual matches'
                                      AND occh.created >= '2021-01-01'
-                                     AND (o.fulfillment like '%prime%' OR o.fulfillment like '%agile%')
+                                     AND (o.fulfillment like '%prime%' OR o.fulfillment like '%agile%' or o.fulfillment like '%staff_augmentation%')
                                      AND o.objective NOT LIKE '**%'
                                      AND o.id NOT IN (SELECT DISTINCT
                                                           opportunity_id
