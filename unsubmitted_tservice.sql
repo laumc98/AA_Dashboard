@@ -4,12 +4,12 @@ select
     general.finished,
     sum(
         if(
-            general.fulfillment LIKE '%prime%',
-            or general.fulfillment LIKE '%agile%',
-            or general.fulfillment LIKE '%ats%',
-            or general.fulfillment LIKE '%self_service%',
-            or general.fulfillment LIKE '%essentials%',
-            or general.fulfillment like '%staff_augmentation%',
+            general.fulfillment LIKE '%prime%'
+            or general.fulfillment LIKE '%agile%'
+            or general.fulfillment LIKE '%ats%'
+            or general.fulfillment LIKE '%self_service%'
+            or general.fulfillment LIKE '%essentials%'
+            or general.fulfillment like '%staff_augmentation%'
             or general.fulfillment like '%pro%',
             general.applications,
             0
@@ -17,8 +17,8 @@ select
     ) AS general_unsubmitted_app,
     sum(
         if(
-            general.fulfillment LIKE '%prime%',
-            or general.fulfillment LIKE '%agile%',
+            general.fulfillment LIKE '%prime%'
+            or general.fulfillment LIKE '%agile%'
             or general.fulfillment like '%staff_augmentation%',
             general.applications,
             0
@@ -33,7 +33,7 @@ select
     ) AS ats_unsubmitted_app,
     sum(
         if(
-            general.fulfillment LIKE '%self_service%',
+            general.fulfillment LIKE '%self_service%'
             or general.fulfillment LIKE '%essentials%',
             general.applications,
             0

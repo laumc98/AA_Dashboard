@@ -3,12 +3,12 @@ SELECT
     str_to_date(concat(yearweek(general.hiring_date), 'Monday'),'%X%V %W') AS date,
     sum(
         if(
-            general.fulfillment LIKE '%prime%',
-            or general.fulfillment LIKE '%agile%',
-            or general.fulfillment LIKE '%ats%',
-            or general.fulfillment LIKE '%self_service%',
-            or general.fulfillment LIKE '%essentials%',
-            or general.fulfillment  like '%staff_augmentation%',
+            general.fulfillment LIKE '%prime%'
+            or general.fulfillment LIKE '%agile%'
+            or general.fulfillment LIKE '%ats%'
+            or general.fulfillment LIKE '%self_service%'
+            or general.fulfillment LIKE '%essentials%'
+            or general.fulfillment  like '%staff_augmentation%'
             or general.fulfillment  like '%pro%',
             general.hires,
             0

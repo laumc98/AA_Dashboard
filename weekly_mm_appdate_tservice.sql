@@ -7,8 +7,8 @@ SELECT
             or general.fulfillment LIKE '%agile%'
             or general.fulfillment LIKE '%ats%'
             or general.fulfillment LIKE '%self_service%'
-            or general.fulfillment LIKE '%essentials%',
-            or general.fulfillment  like '%staff_augmentation%',
+            or general.fulfillment LIKE '%essentials%'
+            or general.fulfillment  like '%staff_augmentation%'
             or general.fulfillment  like '%pro%',
             general.mutual_matches,
             0
