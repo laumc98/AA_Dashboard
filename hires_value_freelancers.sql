@@ -73,6 +73,10 @@ FROM
                     'llcg',
                     'lmmg',
                     'mpsm',
+                    'jppr',
+                    'mbvb',
+                    'ago',
+                    'bcgt'
                     'lfpa_ra',
                     'mmor_ra',
                     'smnb_ra',
@@ -97,6 +101,10 @@ FROM
                     'npd_ra',
                     'llcg_ra',
                     'lmmg_ra',
-                    'mpsm_ra'
+                    'mpsm_ra',
+                    'jppr_ra',
+                    'mbvb_ra',
+                    'ago_ra',
+                    'bcgt_ra'
                     )
     ) AS compensations
