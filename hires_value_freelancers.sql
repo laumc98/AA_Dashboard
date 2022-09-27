@@ -76,7 +76,7 @@ FROM
                     'jppr',
                     'mbvb',
                     'ago',
-                    'bcgt'
+                    'bcgt',
                     'lfpa_ra',
                     'mmor_ra',
                     'smnb_ra',
