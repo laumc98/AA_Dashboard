@@ -2,6 +2,7 @@
 SELECT
     str_to_date(concat(yearweek(occh.created), ' Sunday'),'%X%V %W') AS 'date',
     oca.opportunity_id AS 'ID',
+    o.fulfillment AS 'fulfillment',
     tc.utm_medium AS 'Tracking Codes__utm_medium',
     count(distinct occh.candidate_id) AS 'weekly_mm_channel_ats'
 FROM
@@ -15,7 +16,6 @@ WHERE
     oc.name = 'mutual matches'
     AND occh.created >= '2021-07-18'
     AND oca.interested IS NOT NULL
-    AND o.fulfillment LIKE '%ats%'
     AND o.objective NOT LIKE '**%'
     AND o.id IN (
         SELECT
@@ -34,6 +34,7 @@ WHERE
 GROUP BY
     str_to_date(concat(yearweek(occh.created), ' Sunday'),'%X%V %W'),
     tc.utm_medium,
+    o.fulfillment,
     oca.opportunity_id
 ORDER BY
     str_to_date(concat(yearweek(occh.created), ' Sunday'),'%X%V %W') ASC

@@ -2,6 +2,7 @@
 SELECT
     str_to_date(concat(yearweek(ooh.hiring_date),' Sunday'),'%X%V %W') AS 'date',
     ooh.opportunity_id AS 'ID',
+    o.fulfillment AS 'fulfillment'
     tc.utm_medium AS 'Tracking Codes__utm_medium',
     count(distinct ooh.opportunity_candidate_id) AS 'weekly_hires_channel_ats'
 FROM 
@@ -24,9 +25,9 @@ WHERE
             o.reviewed >= '2021/01/01'
             AND o.objective NOT LIKE '**%'
             AND o.review = 'approved'
-            AND o.fulfillment LIKE '%ats%'
     )
 GROUP BY
     str_to_date(concat(yearweek(ooh.hiring_date),' Sunday'),'%X%V %W'),
     tc.utm_medium,
+    o.fulfillment,
     ooh.opportunity_id

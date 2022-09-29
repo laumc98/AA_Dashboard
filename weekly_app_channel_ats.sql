@@ -2,8 +2,9 @@
 SELECT
     str_to_date(concat(yearweek(oc.interested), ' Sunday'),'%X%V %W') AS 'date',
     o.id AS 'ID',
+    o.fulfillment AS 'fulfillment',
     tc.utm_medium AS 'Tracking Codes__utm_medium',
-    count(distinct oc.id) AS 'weekly_app_channel_ats'
+    count(distinct oc.id) AS 'weekly_app_channel'
 FROM
     opportunity_candidates oc 
     INNER JOIN opportunities o ON oc.opportunity_id = o.id 
@@ -27,9 +28,9 @@ WHERE
             o.reviewed >= '2021/01/01'
             AND o.objective NOT LIKE '**%'
             AND o.review = 'approved'
-            AND o.fulfillment LIKE '%ats%'
     )
 GROUP BY 
     str_to_date(concat(yearweek(oc.interested), ' Sunday'),'%X%V %W'),
     o.id,
+    o.fulfillment,
     tc.utm_medium
