@@ -9,6 +9,7 @@ FROM
     opportunity_operational_hires ooh
     LEFT JOIN tracking_code_candidates tcc ON ooh.opportunity_candidate_id = tcc.candidate_id
     LEFT JOIN tracking_codes tc ON tcc.tracking_code_id = tc.id
+    LEFT JOIN opportunities o ON ooh.opportunity_id = o.id
 WHERE
     ooh.hiring_date IS NOT NULL 
     AND ooh.hiring_date > '2021-7-18'
