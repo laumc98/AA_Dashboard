@@ -77,6 +77,8 @@ FROM
                     'mbvb',
                     'ago',
                     'bcgt',
+                    'DPO',
+                    'jdmb',
                     'lfpa_ra',
                     'mmor_ra',
                     'smnb_ra',
@@ -105,6 +107,8 @@ FROM
                     'jppr_ra',
                     'mbvb_ra',
                     'ago_ra',
-                    'bcgt_ra'
+                    'bcgt_ra',
+                    'DPO_ra',
+                    'jdmb_ra'
                     )
     ) AS compensations
