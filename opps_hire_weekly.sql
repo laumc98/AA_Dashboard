@@ -11,6 +11,6 @@ WHERE
     AND `opportunity_operational_hires`.`hiring_date` < date(now(6))
     )
 GROUP BY
-    str_to_date(concat(yearweek(`Opportunities`.`reviewed`), ' Sunday'),'%X%V %W')
+    str_to_date(concat(yearweek(`Opportunities`.`last_reviewed`), ' Sunday'),'%X%V %W')
 ORDER BY
-    str_to_date(concat(yearweek(`Opportunities`.`reviewed`), ' Sunday'),'%X%V %W') ASC
+    str_to_date(concat(yearweek(`Opportunities`.`last_reviewed`), ' Sunday'),'%X%V %W') ASC

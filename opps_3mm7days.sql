@@ -34,7 +34,7 @@ FROM
                                 SELECT
                                     oc.opportunity_id,
                                     occh.created,
-                                    o.reviewed,
+                                    o.last_reviewed,
                                     oc.name
                                 FROM
                                     opportunity_candidate_column_history occh
@@ -43,7 +43,7 @@ FROM
                                 WHERE
                                     oc.name = 'mutual matches'
                                     AND occh.created >= '2021-01-01'
-                                    AND datediff(date(occh.created), date(o.reviewed)) <= 7
+                                    AND datediff(date(occh.created), date(o.last_reviewed)) <= 7
                                     AND o.objective NOT LIKE '**%'
                                     AND o.id NOT IN (
                                         SELECT
@@ -64,13 +64,13 @@ FROM
                                             INNER JOIN person_flags pf ON pf.person_id = omp.person_id
                                             AND pf.opportunity_crawler = FALSE
                                         WHERE
-                                            o.reviewed >= '2021/01/01'
+                                            o.last_reviewed >= '2021/01/01'
                                             AND o.objective NOT LIKE '**%'
                                             AND o.review = 'approved'
                                     )
                                 ORDER BY
                                     opportunity_id,
-                                    o.reviewed
+                                    o.last_reviewed
                             ) AS matches
                             CROSS JOIN (
                                 SELECT
@@ -116,7 +116,7 @@ FROM
                                 SELECT
                                     oc.opportunity_id,
                                     occh.created,
-                                    o.reviewed,
+                                    o.last_reviewed,
                                     oc.name
                                 FROM
                                     opportunity_candidate_column_history occh
@@ -125,7 +125,7 @@ FROM
                                 WHERE
                                     oc.name = 'mutual matches'
                                     AND occh.created >= '2021-01-01'
-                                    AND datediff(date(occh.created), date(o.reviewed)) <= 7
+                                    AND datediff(date(occh.created), date(o.last_reviewed)) <= 7
                                     AND o.objective NOT LIKE '**%'
                                     AND o.id NOT IN (
                                         SELECT
@@ -146,13 +146,13 @@ FROM
                                             INNER JOIN person_flags pf ON pf.person_id = omp.person_id
                                             AND pf.opportunity_crawler = FALSE
                                         WHERE
-                                            o.reviewed >= '2021/01/01'
+                                            o.last_reviewed >= '2021/01/01'
                                             AND o.objective NOT LIKE '**%'
                                             AND o.review = 'approved'
                                     )
                                 ORDER BY
                                     opportunity_id,
-                                    o.reviewed
+                                    o.last_reviewed
                             ) AS matches
                             CROSS JOIN (
                                 SELECT

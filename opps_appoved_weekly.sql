@@ -1,15 +1,15 @@
 /* AA : AA Main dashboard : weekly opps approved : prod */ 
 SELECT
-    str_to_date(concat(yearweek(`opportunities`.`reviewed`), ' Sunday'),'%X%V %W') AS `date`,
+    str_to_date(concat(yearweek(`opportunities`.`last_reviewed`), ' Sunday'),'%X%V %W') AS `date`,
     count(distinct `opportunities`.`id`) AS `opps_approved_weekly`
 FROM
     `opportunities`
     LEFT JOIN `opportunity_organizations` `Opportunity Organizations` ON `opportunities`.`id` = `Opportunity Organizations`.`opportunity_id`
 WHERE
     (
-        `opportunities`.`reviewed` IS NOT NULL
-        AND `opportunities`.`reviewed` > "2021-7-18"
-        AND `opportunities`.`reviewed` < date(date_add(now(6), INTERVAL 1 day))
+        `opportunities`.`last_reviewed` IS NOT NULL
+        AND `opportunities`.`last_reviewed` > "2021-7-18"
+        AND `opportunities`.`last_reviewed` < date(date_add(now(6), INTERVAL 1 day))
         AND `opportunities`.`review` = 'approved'
         AND (
             `Opportunity Organizations`.`organization_id` <> 665801
@@ -17,6 +17,6 @@ WHERE
         )
     )
 GROUP BY
-    str_to_date(concat(yearweek(`opportunities`.`reviewed`), ' Sunday'),'%X%V %W')
+    str_to_date(concat(yearweek(`opportunities`.`last_reviewed`), ' Sunday'),'%X%V %W')
 ORDER BY
-    str_to_date(concat(yearweek(`opportunities`.`reviewed`), ' Sunday'),'%X%V %W') ASC
+    str_to_date(concat(yearweek(`opportunities`.`last_reviewed`), ' Sunday'),'%X%V %W') ASC

@@ -1,6 +1,6 @@
 /* AA : AA Main dashboard : weekly hires 15 days by approved date : prod */ 
 SELECT
-   str_to_date(concat(yearweek(`Opportunities`.`reviewed`),'Sunday'),'%X%V %W') AS `date`,
+   str_to_date(concat(yearweek(`Opportunities`.`last_reviewed`),'Sunday'),'%X%V %W') AS `date`,
    count(distinct `opportunity_operational_hires`.`opportunity_id`) AS `opps_hire_weekly14days`
 FROM
    `opportunity_operational_hires`
@@ -11,10 +11,10 @@ WHERE
       AND `opportunity_operational_hires`.`hiring_date` < date(now(6))
       AND datediff(
          date(`opportunity_operational_hires`.`hiring_date`),
-         date(`Opportunities`.`reviewed`)
+         date(`Opportunities`.`last_reviewed`)
       ) <= 15
    )
 GROUP BY
-   str_to_date(concat(yearweek(`Opportunities`.`reviewed`),'Sunday'),'%X%V %W')
+   str_to_date(concat(yearweek(`Opportunities`.`last_reviewed`),'Sunday'),'%X%V %W')
 ORDER BY
-   str_to_date(concat(yearweek(`Opportunities`.`reviewed`),'Sunday'),'%X%V %W') ASC
+   str_to_date(concat(yearweek(`Opportunities`.`last_reviewed`),'Sunday'),'%X%V %W') ASC

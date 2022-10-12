@@ -7,8 +7,8 @@ FROM
    LEFT JOIN `opportunities` `opportunities__via__opportunit` ON `opportunity_operational_hires`.`opportunity_id` = `opportunities__via__opportunit`.`id`
 WHERE
    (
-      `opportunities__via__opportunit`.`reviewed` > "2021-7-18"
-      AND `opportunities__via__opportunit`.`reviewed` < date(now(6))
+      `opportunities__via__opportunit`.`last_reviewed` > "2021-7-18"
+      AND `opportunities__via__opportunit`.`last_reviewed` < date(now(6))
       AND (`opportunities__via__opportunit`.`fulfillment` like '%prime%' OR `opportunities__via__opportunit`.`fulfillment` like '%agile%' or `opportunities__via__opportunit`.`fulfillment` like '%staff_augmentation%')
    )
 GROUP BY

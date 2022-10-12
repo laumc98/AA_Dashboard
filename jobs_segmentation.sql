@@ -1,7 +1,7 @@
 /* AA : Users segmentation: jobs_segmentation : prod */ 
 SELECT 
     o.id,
-    date(o.reviewed) as 'approved_date',
+    date(o.last_reviewed) as 'approved_date',
     o.fulfillment as 't_service',
     o.opportunity as 't_job',
     o.commitment_id as 't_preference',
@@ -41,5 +41,5 @@ FROM
             opportunity_compensations.opportunity_id
     ) AS compensation ON o.id = compensation.opportunity_id
 WHERE 
-    date(o.reviewed) > '2022-2-1'
+    date(o.last_reviewed) > '2022-2-1'
     AND o.review = 'approved'

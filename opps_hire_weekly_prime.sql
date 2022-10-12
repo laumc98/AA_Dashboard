@@ -1,6 +1,6 @@
 /* AA : AA Main dashboard : weekly prime hires by approved date : prod */ 
 SELECT
-   str_to_date(concat(yearweek(`Opportunities`.`reviewed`),'Sunday'),'%X%V %W') AS `date`,
+   str_to_date(concat(yearweek(`Opportunities`.`last_reviewed`),'Sunday'),'%X%V %W') AS `date`,
    count(distinct `opportunity_operational_hires`.`opportunity_id`) AS `opps_hire_weekly_prime`
 FROM
    `opportunity_operational_hires`
@@ -12,6 +12,6 @@ WHERE
       AND (`Opportunities`.`fulfillment` like '%prime%' OR `Opportunities`.`fulfillment` like '%agile%' or `Opportunities`.`fulfillment` like '%staff_augmentation%')
    )
 GROUP BY
-   str_to_date(concat(yearweek(`Opportunities`.`reviewed`),'Sunday'),'%X%V %W')
+   str_to_date(concat(yearweek(`Opportunities`.`last_reviewed`),'Sunday'),'%X%V %W')
 ORDER BY
-   str_to_date(concat(yearweek(`Opportunities`.`reviewed`),'Sunday'),'%X%V %W') ASC
+   str_to_date(concat(yearweek(`Opportunities`.`last_reviewed`),'Sunday'),'%X%V %W') ASC

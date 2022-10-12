@@ -9,8 +9,8 @@ WHERE
    (
       `opportunity_changes_history`.`type` = 'outbound'
       AND `opportunity_changes_history`.`value` = 0
-      AND `opportunities__via__opportunit`.`reviewed` > "2021-7-18"
-      AND `opportunities__via__opportunit`.`reviewed` < date(now(6))
+      AND `opportunities__via__opportunit`.`last_reviewed` > "2021-7-18"
+      AND `opportunities__via__opportunit`.`last_reviewed` < date(now(6))
       AND (`opportunities__via__opportunit`.`fulfillment` like '%prime%' or `opportunities__via__opportunit`.`fulfillment` like '%agile%' or `opportunities__via__opportunit`.`fulfillment` like '%staff_augmentation%')
    )
 GROUP BY
