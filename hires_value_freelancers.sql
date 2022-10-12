@@ -48,6 +48,7 @@ FROM
                     'lfrr',
                     'mmam',
                     'cals',
+                    'wers',
                     'lfpa',
                     'mmor',
                     'smnb',
