@@ -14,7 +14,7 @@ FROM
                 SELECT
                     opportunity_id,
                     created AS match_date,
-                    reviewed AS reviewed_date
+                    last_reviewed AS reviewed_date
                 FROM
                     (
                         SELECT
@@ -98,7 +98,7 @@ FROM
                 SELECT
                     opportunity_id,
                     created AS match_date,
-                    reviewed AS reviewed_date
+                    last_reviewed AS reviewed_date
                 FROM
                     (
                         SELECT
