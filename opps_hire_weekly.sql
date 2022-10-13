@@ -1,6 +1,6 @@
 /* AA : AA Main dashboard : weekly hires by approved date : prod */ 
 SELECT
-    str_to_date(concat(yearweek(`Opportunities`.`reviewed`), ' Sunday'),'%X%V %W') AS `date`,
+    str_to_date(concat(yearweek(`Opportunities`.`last_reviewed`), ' Sunday'),'%X%V %W') AS `date`,
     count(distinct `opportunity_operational_hires`.`opportunity_id`) AS `opps_hire_weekly`
 FROM
     `opportunity_operational_hires`
