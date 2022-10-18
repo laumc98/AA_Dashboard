@@ -36,6 +36,6 @@ FROM
             AND people.subject_identifier IS NULL
             AND career_advisor.deleted >= '2022-07-17'
         GROUP BY
-            str_to_date(concat(yearweek(career_advisor.evaluate_at), ' Sunday'),'%X%V %W')
+            str_to_date(concat(yearweek(career_advisor.deleted), ' Sunday'),'%X%V %W')
     ) AS sent ON pending.date = sent.date
 GROUP BY 1,2
