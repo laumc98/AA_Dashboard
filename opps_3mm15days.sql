@@ -34,7 +34,7 @@ FROM
                                 SELECT
                                     oc.opportunity_id,
                                     occh.created,
-                                    date(coalesce(null, o.first_reviewed, o.last_reviewed)),
+                                    date(coalesce(null, o.first_reviewed, o.last_reviewed)) as last_reviewed,
                                     oc.name
                                 FROM
                                     opportunity_candidate_column_history occh
@@ -118,7 +118,7 @@ FROM
                                 SELECT
                                     oc.opportunity_id,
                                     occh.created,
-                                    date(coalesce(null, o.first_reviewed, o.last_reviewed)),
+                                    date(coalesce(null, o.first_reviewed, o.last_reviewed)) as last_reviewed,
                                     oc.name
                                 FROM
                                     opportunity_candidate_column_history occh
