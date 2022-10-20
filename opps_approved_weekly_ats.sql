@@ -1,6 +1,6 @@
 /* AA : AA Main dashboard : weekly ats opps approved : prod */ 
 SELECT
-    str_to_date(concat(yearweek(`opportunities`.`last_reviewed`), ' Sunday'),'%X%V %W') AS `date`,
+    str_to_date(concat(yearweek(date(coalesce(null, `opportunities`.`first_reviewed`, `opportunities`.`last_reviewed`))), ' Sunday'),'%X%V %W') AS `date`,
     count(distinct `opportunities`.`id`) AS `opps_approved_weekly_ats`
 FROM
     `opportunities`
@@ -18,6 +18,6 @@ WHERE
         AND `opportunities`.`fulfillment` like '%ats%'
     )
 GROUP BY
-    str_to_date(concat(yearweek(`opportunities`.`last_reviewed`), ' Sunday'),'%X%V %W')
+    str_to_date(concat(yearweek(date(coalesce(null, `opportunities`.`first_reviewed`, `opportunities`.`last_reviewed`))), ' Sunday'),'%X%V %W')
 ORDER BY
-    str_to_date(concat(yearweek(`opportunities`.`last_reviewed`), ' Sunday'),'%X%V %W') ASC
+    str_to_date(concat(yearweek(date(coalesce(null, `opportunities`.`first_reviewed`, `opportunities`.`last_reviewed`))), ' Sunday'),'%X%V %W') ASC

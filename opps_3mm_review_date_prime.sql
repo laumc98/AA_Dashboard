@@ -55,7 +55,7 @@ FROM
                                            INNER JOIN person_flags pf ON pf.person_id = omp.person_id
                                            AND pf.opportunity_crawler = FALSE
                                    WHERE
-                                         o.last_reviewed >= '2021/07/18'
+                                         date(coalesce(null, o.first_reviewed, o.last_reviewed)) >= '2021/07/18'
                                      AND o.objective NOT LIKE '**%'
                                      AND o.review = 'approved')
                     ORDER BY
@@ -122,7 +122,7 @@ FROM
                                                           INNER JOIN person_flags pf ON pf.person_id = omp.person_id
                                                           AND pf.opportunity_crawler = FALSE
                                                   WHERE
-                                                        o.last_reviewed >= '2021/07/18'
+                                                        date(coalesce(null, o.first_reviewed, o.last_reviewed)) >= '2021/07/18'
                                                     AND o.objective NOT LIKE '**%'
                                                     AND o.review = 'approved')
                                    ORDER BY

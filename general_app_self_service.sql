@@ -14,7 +14,7 @@ from
 where
     date(opportunity_candidates.created) > "2021-7-18"
     AND o.objective not like '***%'
-    AND date(o.last_reviewed) >= '2022-3-31'
+    AND date(coalesce(null, o.first_reviewed, o.last_reviewed)) >= '2022-3-31'
     AND opportunity_candidates.application_step IS NOT NULL
     AND o.id IN (
         SELECT
