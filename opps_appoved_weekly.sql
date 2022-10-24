@@ -8,8 +8,8 @@ FROM
 WHERE
     (
         `opportunities`.`last_reviewed` IS NOT NULL
-        AND `opportunities`.`last_reviewed` > "2021-7-18"
-        AND `opportunities`.`last_reviewed` < date(date_add(now(6), INTERVAL 1 day))
+        AND date(coalesce(null, `opportunities`.`first_reviewed`, `opportunities`.`last_reviewed`)) > "2021-7-18"
+        AND date(coalesce(null, `opportunities`.`first_reviewed`, `opportunities`.`last_reviewed`)) < date(date_add(now(6), INTERVAL 1 day))
         AND `opportunities`.`review` = 'approved'
         AND (
             `Opportunity Organizations`.`organization_id` <> 665801
