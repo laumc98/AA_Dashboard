@@ -1,9 +1,10 @@
-/* AA : AA Main dashboard : weekly ats hires per channel by mm date : prod */ 
+/* AA : AA Main dashboard : weekly ats hires per channel by ready for interview date : prod */ 
 SELECT
     str_to_date(concat(yearweek(occh.created), ' Sunday'),'%X%V %W') AS 'date',
     oca.opportunity_id AS 'ID',
+    o.fulfillment AS 'fulfillment',
     tc.utm_medium AS 'Tracking Codes__utm_medium',
-    count(distinct occh.candidate_id) AS 'weekly_hires_channel_appdate_ats'
+    count(distinct ooh.opportunity_candidate_id) AS 'weekly_hires_channel_appdate_ats'
 FROM
     opportunity_candidate_column_history occh
     INNER JOIN opportunity_columns oc ON occh.to = oc.id
@@ -13,7 +14,7 @@ FROM
     LEFT JOIN tracking_codes tc ON tcc.tracking_code_id = tc.id
     LEFT JOIN opportunity_operational_hires ooh ON occh.candidate_id = ooh.opportunity_candidate_id
 WHERE
-    oc.name = 'mutual matches'
+    oc.funnel_tag = 'ready_for_interview'
     AND occh.created >= '2021-7-18'
     AND oca.interested IS NOT NULL
     AND ooh.hiring_date IS NOT NULL
@@ -32,11 +33,11 @@ WHERE
             date(coalesce(null, o.first_reviewed, o.last_reviewed)) >= '2021/01/01'
             AND o.objective NOT LIKE '**%'
             AND o.review = 'approved'
-            AND o.fulfillment LIKE '%ats%'
     )
 GROUP BY
     str_to_date(concat(yearweek(occh.created), ' Sunday'),'%X%V %W'),
     tc.utm_medium,
-    oca.opportunity_id
+    oca.opportunity_id,
+    o.fulfillment
 ORDER BY
     str_to_date(concat(yearweek(occh.created), ' Sunday'),'%X%V %W') ASC
