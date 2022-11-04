@@ -2,6 +2,7 @@
 SELECT
     str_to_date(concat(yearweek(oca.interested), ' Sunday'),'%X%V %W') AS 'date',
     oca.opportunity_id AS 'ID',
+    o.fulfillment AS 'fulfillment',
     tc.utm_medium AS 'Tracking Codes__utm_medium',
     count(distinct oca.id) AS 'weekly_mm_channel_appdate_ats'
 FROM
@@ -36,4 +37,5 @@ WHERE
 GROUP BY 
     str_to_date(concat(yearweek(oca.interested), ' Sunday'),'%X%V %W'),
     tc.utm_medium,
+    o.fulfillment,
     oca.opportunity_id
