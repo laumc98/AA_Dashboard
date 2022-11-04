@@ -32,7 +32,6 @@ WHERE
             date(coalesce(null, o.first_reviewed, o.last_reviewed)) >= '2021/01/01'
             AND o.objective NOT LIKE '**%'
             AND o.review = 'approved'
-            AND o.fulfillment LIKE '%ats%'
     )
 GROUP BY 
     str_to_date(concat(yearweek(oca.interested), ' Sunday'),'%X%V %W'),
