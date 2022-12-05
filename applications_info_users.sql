@@ -10,4 +10,4 @@ FROM
     LEFT JOIN people ON opportunity_candidates.person_id = people.id 
 WHERE 
     opportunity_candidates.interested IS NOT NULL 
-    AND opportunity_candidates.interested > '2022-01-01'
+    AND opportunity_candidates.interested > '2022-04-01'
