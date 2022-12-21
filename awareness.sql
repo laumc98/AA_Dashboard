@@ -7,3 +7,4 @@ FROM
     `metrics_users`
 WHERE
     `metrics_users`.`awareness_answer` <> 'unknown'
+    AND `metrics_users`.`awareness_answer` <> ''
