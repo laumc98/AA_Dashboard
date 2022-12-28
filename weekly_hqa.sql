@@ -6,6 +6,7 @@ SELECT
     count(distinct applications.gg_id) AS 'HQA'
 FROM
     applications
+    INNER JOIN opportunity ON applications.opportunity_reference_id = opportunity.ref_id
 WHERE
     (
         applications.filters_passed = TRUE
