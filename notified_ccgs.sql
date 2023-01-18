@@ -14,5 +14,5 @@ WHERE
         AND notifications.status = 'sent'
         AND people.subject_identifier IS NULL
         AND people.name not like '%test%'
-        AND date(notifications.sent_at) > '2022-06-01'
+        AND date(notifications.sent_at) > '2022-04-01'
     )
