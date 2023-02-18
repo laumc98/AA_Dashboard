@@ -10,7 +10,7 @@ FROM
 WHERE
     (
         applications.filters_passed = TRUE
-        AND applications.match_score > 0.85
+        AND applications.match_score > 0.80
     )
 GROUP BY 
     str_to_date(concat(yearweek(applications.timestamp), ' Sunday'),'%X%V %W'),
