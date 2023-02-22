@@ -11,11 +11,16 @@ FROM
                 count(*) AS CCGs_created
             FROM
                 people
-                LEFT JOIN person_flags ON people.id = person_flags.person_id
+                INNER JOIN notifications ON people.id = notifications.to
             WHERE
                 (
                     people.subject_identifier IS NULL
                     OR people.subject_identifier != people.gg_id
+                )
+                AND 
+                (
+                    notifications.template = 'career-advisor-sourcing-first-evaluation'
+                        OR notifications.template = 'career-advisor-syndication-first-evaluation'
                 )
                 AND date(people.created) > date(date_add(now(6), INTERVAL -1 year))
             GROUP BY
@@ -23,19 +28,21 @@ FROM
         ) AS created
         LEFT JOIN(
             SELECT
-                date(people.created) AS date_created,
+                date(person_flags.community_created_claimed_at) AS date_claimed,
                 count(*) AS CCGs_claimed
             FROM
-                people
-                LEFT JOIN person_flags ON people.id = person_flags.person_id
+                person_flags
+                INNER JOIN people ON person_flags.person_id = people.id
+                INNER JOIN notifications ON person_flags.person_id = notifications.to
             WHERE
-                (
-                    people.subject_identifier IS NULL
-                    OR people.subject_identifier != people.gg_id
-                )
-                AND date(people.created) > date(date_add(now(6), INTERVAL -1 year))
+                people.subject_identifier != people.gg_id
                 AND date(person_flags.community_created_claimed_at) IS NOT NULL
+                AND date(people.created) > date(date_add(now(6), INTERVAL -1 year))
+                AND (
+                    notifications.template = 'career-advisor-sourcing-first-evaluation'
+                        OR notifications.template = 'career-advisor-syndication-first-evaluation'
+                )
             GROUP BY
-                date(people.created)
-        ) AS claimed ON created.date_created = claimed.date_created
+                date_claimed
+        ) AS claimed ON created.date_created = claimed.date_claimed
     )
