@@ -1,9 +1,9 @@
-/* AA : AA Main dashboard : weekly hires per channel by mm date : prod */ 
+/* AA : AA Main dashboard : weekly hires per channel by app date : prod */ 
 SELECT
     str_to_date(concat(yearweek(oca.interested),' Sunday'),'%X%V %W') AS 'date',
     ooh.opportunity_id AS 'ID',
     tc.utm_medium AS 'Tracking Codes__utm_medium',
-    count(distinct ooh.opportunity_candidate_id) AS 'weekly_hires_channel'
+    count(distinct ooh.opportunity_candidate_id) AS 'weekly_hires_channel_appdate'
 FROM 
     opportunity_operational_hires ooh
     LEFT JOIN opportunity_candidates oca ON ooh.opportunity_candidate_id = oca.id

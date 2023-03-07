@@ -1,4 +1,4 @@
-/* AA : AA Main dashboard : weekly ats hires per channel by ready for interview date : prod */ 
+/* AA : AA Main dashboard : weekly hires per channel by ready for interview date : prod */ 
 SELECT
     str_to_date(concat(yearweek(occh.created), ' Sunday'),'%X%V %W') AS 'date',
     oca.opportunity_id AS 'ID',
