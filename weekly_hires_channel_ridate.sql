@@ -4,7 +4,7 @@ SELECT
     oca.opportunity_id AS 'ID',
     o.fulfillment AS 'fulfillment',
     tc.utm_medium AS 'Tracking Codes__utm_medium',
-    count(distinct ooh.opportunity_candidate_id) AS 'weekly_hires_channel_appdate_ats'
+    count(distinct ooh.opportunity_candidate_id) AS 'weekly_hires_channel_ridate'
 FROM
     opportunity_candidate_column_history occh
     INNER JOIN opportunity_columns oc ON occh.to = oc.id
@@ -16,10 +16,10 @@ FROM
 WHERE
     oc.funnel_tag = 'ready_for_interview'
     AND occh.created >= '2021-7-18'
-    AND oca.interested IS NOT NULL
     AND ooh.hiring_date IS NOT NULL
     AND o.objective NOT LIKE '**%'
     AND oca.application_step IS NOT NULL
+    AND datediff(date(ooh.hiring_date), date(occh.created)) <= 7
     AND o.id IN (
         SELECT
             DISTINCT o.id AS opportunity_id
