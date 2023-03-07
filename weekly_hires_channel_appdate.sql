@@ -7,6 +7,7 @@ SELECT
     count(distinct ooh.opportunity_candidate_id) AS 'weekly_hires_channel_appdate'
 FROM 
     opportunity_operational_hires ooh
+    INNER JOIN opportunities o ON ooh.opportunity_id = o.id
     LEFT JOIN opportunity_candidates oca ON ooh.opportunity_candidate_id = oca.id
     LEFT JOIN tracking_code_candidates tcc ON oca.id = tcc.candidate_id
     LEFT JOIN tracking_codes tc ON tcc.tracking_code_id = tc.id
