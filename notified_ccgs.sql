@@ -12,7 +12,9 @@ WHERE
         (notifications.template = 'career-advisor-job-opportunity'
             or notifications.template = 'career-advisor-invited-job-opportunity')
         AND notifications.status = 'sent'
-        AND people.subject_identifier IS NULL
+        AND (people.subject_identifier IS NULL 
+                OR people.subject_identifier != people.gg_id)
         AND people.name not like '%test%'
         AND date(notifications.sent_at) > '2022-06-01'
+        AND TRIM('"' FROM JSON_EXTRACT(notifications.context, '$.utmMedium')) = 'rc_ccg'
     )
