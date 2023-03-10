@@ -19,7 +19,7 @@ WHERE
     AND ooh.hiring_date IS NOT NULL
     AND o.objective NOT LIKE '**%'
     AND oca.application_step IS NOT NULL
-    AND datediff(date(ooh.hiring_date), date(occh.created)) <= 7
+    AND date(ooh.hiring_date)) <= date(occh.created) + 7
     AND o.id IN (
         SELECT
             DISTINCT o.id AS opportunity_id

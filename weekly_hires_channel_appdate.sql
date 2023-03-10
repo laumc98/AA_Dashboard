@@ -15,7 +15,7 @@ WHERE
     ooh.hiring_date IS NOT NULL 
     AND oca.interested IS NOT NULL
     AND date(ooh.hiring_date) > '2021-7-18'
-    AND datediff(date(ooh.hiring_date), date(oca.interested)) <= 7
+    AND date(ooh.hiring_date) <= date(oca.interested) + 7
     AND ooh.opportunity_id IN (
         SELECT
             DISTINCT o.id AS opportunity_id

@@ -26,7 +26,7 @@ FROM
 WHERE
     oc.funnel_tag = 'ready_for_interview'
     AND o.objective NOT LIKE '**%'
-    AND datediff(date(mutual_matches.mm_date), date(occh.created)) <= 7
+    AND date(occh.created) <= date(mutual_matches.mm_date) + 7
     AND o.id IN (
         SELECT
             DISTINCT o.id AS opportunity_id
