@@ -52,5 +52,5 @@ WHERE
 GROUP BY 
     str_to_date(concat(yearweek(mutual_matches.interested), ' Sunday'),'%X%V %W'),
     mutual_matches.opportunity_id,
-    mutual_matches.fulfillment
+    mutual_matches.fulfillment,
     mutual_matches.utm_medium
