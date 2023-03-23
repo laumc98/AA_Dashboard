@@ -4,7 +4,7 @@ SELECT
     ready_for_interview.opportunity_id AS 'ID',
     ready_for_interview.fulfillment AS 'fulfillment',
     ready_for_interview.utm_medium AS 'Tracking Codes__utm_medium',
-    count(*) AS 'weekly_ready_interview'
+    count(*) AS 'weekly_ready_interview_mmdate'
 FROM
 (
     SELECT 
