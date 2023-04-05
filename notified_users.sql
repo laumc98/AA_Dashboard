@@ -24,6 +24,6 @@ WHERE
             )
         AND notifications.status = 'sent'
         AND people.name not like '%test%'
-        AND date(notifications.sent_at) > '2022-06-01'
+        AND date(notifications.sent_at) > '2022-08-01'
     )
 ORDER BY notification_date desc
