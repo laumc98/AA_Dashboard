@@ -1,22 +1,48 @@
 /* AA : AA Main dashboard : weekly hires per channel by app date : prod */ 
 SELECT
-    str_to_date(concat(yearweek(oca.interested),' Sunday'),'%X%V %W') AS 'date',
-    ooh.opportunity_id AS 'ID',
+    str_to_date(concat(yearweek(ocan.interested),' Sunday'),'%X%V %W') AS 'date',
+    o.id AS 'ID',
     o.fulfillment AS 'fulfillment',
     tc.utm_medium AS 'Tracking Codes__utm_medium',
-    count(distinct ooh.opportunity_candidate_id) AS 'weekly_hires_channel_appdate'
-FROM 
-    opportunity_operational_hires ooh
-    INNER JOIN opportunities o ON ooh.opportunity_id = o.id
-    LEFT JOIN opportunity_candidates oca ON ooh.opportunity_candidate_id = oca.id
-    LEFT JOIN tracking_code_candidates tcc ON oca.id = tcc.candidate_id
+    count(distinct all_hires.candidate_id) AS 'weekly_hires_channel_appdate'
+FROM
+    (
+        SELECT
+            DATE(ooh.hiring_date) AS 'hire_date',
+            ooh.opportunity_candidate_id AS 'candidate_id'
+        FROM 
+            opportunity_operational_hires ooh
+        WHERE
+            ooh.hiring_date > '2021-7-18'
+            
+        UNION
+        
+        SELECT
+            MIN(occh.created) AS 'hire_date',
+            occh.candidate_id AS 'candidate_id'
+        FROM
+            opportunity_candidate_column_history occh
+            INNER JOIN opportunity_candidates ocan ON occh.candidate_id = ocan.id
+            INNER JOIN opportunities o ON ocan.opportunity_id = o.id
+        WHERE
+            occh.created >= '2022-01-01'
+            AND occh.to_funnel_tag = 'hired'
+            AND (
+                o.fulfillment LIKE 'self%'
+                OR o.fulfillment LIKE 'essentials%'
+                OR o.fulfillment LIKE 'pro%'
+                OR o.fulfillment LIKE 'ats%'
+            )
+        GROUP BY
+            occh.candidate_id
+    ) AS all_hires
+    INNER JOIN opportunity_candidates ocan ON all_hires.candidate_id = ocan.id
+    INNER JOIN opportunities o ON ocan.opportunity_id = o.id
+    LEFT JOIN tracking_code_candidates tcc ON ocan.id = tcc.candidate_id
     LEFT JOIN tracking_codes tc ON tcc.tracking_code_id = tc.id
 WHERE
-    ooh.hiring_date IS NOT NULL 
-    AND oca.interested IS NOT NULL
-    AND date(ooh.hiring_date) > '2021-7-18'
-    AND date(ooh.hiring_date) <= date(oca.interested) + 7
-    AND ooh.opportunity_id IN (
+    date(all_hires.hire_date) <= date(ocan.interested) + 7
+    AND o.id IN (
         SELECT
             DISTINCT o.id AS opportunity_id
         FROM
@@ -29,9 +55,9 @@ WHERE
             date(coalesce(null, o.first_reviewed, o.last_reviewed)) >= '2021/01/01'
             AND o.objective NOT LIKE '**%'
             AND o.review = 'approved'
-    )
-GROUP BY
-    str_to_date(concat(yearweek(oca.interested),' Sunday'),'%X%V %W'),
+        )
+GROUP BY 
+    str_to_date(concat(yearweek(ocan.interested),' Sunday'),'%X%V %W'),
     tc.utm_medium,
-    ooh.opportunity_id,
-    o.fulfillment
+    o.fulfillment,
+    o.id

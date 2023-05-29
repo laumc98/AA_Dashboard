@@ -1,18 +1,44 @@
 /* AA : AA Main dashboard : list hires : prod */ 
 SELECT
-   `People`.`subject_identifier` AS `SubjectID`,
-   `opportunity_candidates`.`id` AS `id`,
-   date(`opportunity_operational_hires`.`hiring_date`) AS `date`,
-   `o`.`fulfillment`,
-   `People`.`email` AS `email`
+    people.subject_identifier AS 'SubjectID',
+    all_hires.candidate_id AS 'id',
+    date(all_hires.hire_date) AS 'date',
+    o.fulfillment,
+    people.email AS 'email'
 FROM
-   `opportunity_candidates`
-   LEFT JOIN `opportunities` `o` on `opportunity_candidates`.`opportunity_id` = `o`.`id`
-   LEFT JOIN `people` `People` ON `opportunity_candidates`.`person_id` = `People`.`id`
-   LEFT JOIN `opportunity_operational_hires` ON `opportunity_candidates`.`id` = `opportunity_operational_hires`.`opportunity_candidate_id`
+    (
+        SELECT
+            DATE(ooh.hiring_date) AS 'hire_date',
+            ooh.opportunity_candidate_id AS 'candidate_id'
+        FROM 
+            opportunity_operational_hires ooh
+        WHERE
+            ooh.hiring_date > '2021-7-18'
+            
+        UNION
+        
+        SELECT
+            MIN(occh.created) AS 'hire_date',
+            occh.candidate_id AS 'candidate_id'
+        FROM
+            opportunity_candidate_column_history occh
+            INNER JOIN opportunity_candidates ocan ON occh.candidate_id = ocan.id
+            INNER JOIN opportunities o ON ocan.opportunity_id = o.id
+        WHERE
+            occh.created >= '2022-01-01'
+            AND occh.to_funnel_tag = 'hired'
+            AND (
+                o.fulfillment LIKE 'self%'
+                OR o.fulfillment LIKE 'essentials%'
+                OR o.fulfillment LIKE 'pro%'
+                OR o.fulfillment LIKE 'ats%'
+            )
+        GROUP BY
+            occh.candidate_id
+    ) AS all_hires
+    INNER JOIN opportunity_candidates ocan ON all_hires.candidate_id = ocan.id
+    INNER JOIN opportunities o ON ocan.opportunity_id = o.id
+    LEFT JOIN people ON ocan.person_id = people.id
 WHERE
-   (
-      `opportunity_operational_hires`.`hiring_date` IS NOT NULL
-      AND (`opportunity_operational_hires`.`hiring_date` >= date(now(6))
-            AND `opportunity_operational_hires`.`hiring_date` < date(date_add(now(6), INTERVAL 1 day)))
-   )
+    (all_hires.hire_date >= date(now(6))
+        AND all_hires.hire_date < date(date_add(now(6), INTERVAL 1 day)))
