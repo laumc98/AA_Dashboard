@@ -1,7 +1,7 @@
 /* AA : AA Main dashboard : weekly ss hires 15 days by approved date : prod */ 
 SELECT
    str_to_date(concat(yearweek(date(coalesce(null, o.first_reviewed, o.last_reviewed))),'Sunday'),'%X%V %W') AS 'date',
-   count(distinct o.id) AS 'opps_hire_weekly_ss7days'
+   count(distinct o.id) AS 'opps_hire_weekly_ss14days'
 FROM
     (
         SELECT
