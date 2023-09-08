@@ -7,4 +7,4 @@ SELECT
 FROM
    "snowplow"."com_torrelabs_match_distributed_3"
 WHERE
-   "snowplow"."com_torrelabs_match_distributed_3"."root_tstamp" >= timestamp with time zone '2022-08-02 00:00:00.000Z'
+   "snowplow"."com_torrelabs_match_distributed_3"."root_tstamp" >= timestamp with time zone '2022-09-02 00:00:00.000Z'
