@@ -42,3 +42,4 @@ FROM
 WHERE
     (all_hires.hire_date >= date(now(6))
         AND all_hires.hire_date < date(date_add(now(6), INTERVAL 1 day)))
+    AND o.crawled = FALSE

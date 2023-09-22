@@ -39,6 +39,7 @@ FROM
         AND occh.created >= date(date_add(now(6), INTERVAL -1 year))
         AND oca.interested IS NOT NULL 
         AND o.objective NOT LIKE '**%'
+        AND o.crawled = FALSE
         AND o.id IN (
             SELECT
                 DISTINCT o.id AS opportunity_id

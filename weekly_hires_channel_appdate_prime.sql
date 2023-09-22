@@ -18,6 +18,7 @@ WHERE
     AND oca.interested IS NOT NULL
     AND ooh.hiring_date IS NOT NULL
     AND o.objective NOT LIKE '**%'
+    AND o.crawled = FALSE
     AND oca.application_step IS NOT NULL
     AND o.id IN (
         SELECT

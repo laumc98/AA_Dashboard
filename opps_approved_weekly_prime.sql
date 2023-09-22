@@ -11,6 +11,7 @@ WHERE
         AND date(coalesce(null, `opportunities`.`first_reviewed`, `opportunities`.`last_reviewed`)) > "2021-7-18"
         AND date(coalesce(null, `opportunities`.`first_reviewed`, `opportunities`.`last_reviewed`)) < date(date_add(now(6), INTERVAL 1 day))
         AND `opportunities`.`review` = 'approved'
+        AND `opportunities`.`crawled` = FALSE
         AND (
             `Opportunity Organizations`.`organization_id` <> 665801
             OR `Opportunity Organizations`.`organization_id` IS NULL

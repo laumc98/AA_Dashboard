@@ -10,6 +10,7 @@ FROM
 WHERE
     oc.name = 'mutual matches'
     AND o.objective NOT LIKE '**%'
+    AND o.crawled = FALSE
     AND (
         occh.created >= date(now(6))
         AND occh.created < date(date_add(now(6), INTERVAL 1 day))

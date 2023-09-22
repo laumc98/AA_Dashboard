@@ -25,6 +25,7 @@ FROM
         AND occh.created >= '2021-07-18'
         AND oca.interested IS NOT NULL 
         AND o.objective NOT LIKE '**%'
+        AND o.crawled = FALSE
         AND o.id IN (
             SELECT
                 DISTINCT o.id AS opportunity_id

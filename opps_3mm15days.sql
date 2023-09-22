@@ -47,6 +47,7 @@ FROM
                                     AND datediff(date(occh.created), date(coalesce(null, o.first_reviewed, o.last_reviewed))) <= 15
                                     AND date(coalesce(null, o.first_reviewed, o.last_reviewed)) <= date(date_add(now(6), INTERVAL -15 day))
                                     AND o.objective NOT LIKE '**%'
+                                    AND o.crawled = FALSE
                                     AND o.id NOT IN (
                                         SELECT
                                             DISTINCT opportunity_id
@@ -131,6 +132,7 @@ FROM
                                     AND datediff(date(occh.created), date(coalesce(null, o.first_reviewed, o.last_reviewed))) <= 15
                                     AND date(coalesce(null, o.first_reviewed, o.last_reviewed)) <= date(date_add(now(6), INTERVAL -15 day))
                                     AND o.objective NOT LIKE '**%'
+                                    AND o.crawled = FALSE
                                     AND o.id NOT IN (
                                         SELECT
                                             DISTINCT opportunity_id

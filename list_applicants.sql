@@ -14,4 +14,5 @@ WHERE
       `opportunity_candidates`.`interested` IS NOT NULL
       AND (`opportunity_candidates`.`interested` >= date(now(6))
             AND `opportunity_candidates`.`interested` < date(date_add(now(6), INTERVAL 1 day)))
+      AND `o`.`crawled` = FALSE
    )

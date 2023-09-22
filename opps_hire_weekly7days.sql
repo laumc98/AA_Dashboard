@@ -14,6 +14,7 @@ WHERE
          (date(coalesce(null, `Opportunities`.`first_reviewed`, `Opportunities`.`last_reviewed`)))
       ) <= 7
       AND date(`Opportunities`.`last_reviewed`) <= date(date_add(now(6), INTERVAL -7 day))
+      AND `Opportunities`.`crawled` = FALSE
    )
 GROUP BY
    str_to_date(concat(yearweek(date(coalesce(null, `Opportunities`.`first_reviewed`, `Opportunities`.`last_reviewed`))),'Sunday'),'%X%V %W')

@@ -14,6 +14,7 @@ WHERE
          (date(coalesce(null, `Opportunities`.`first_reviewed`, `Opportunities`.`last_reviewed`)))
       ) <= 15
       AND `Opportunities`.`fulfillment` like '%ats%'
+      AND `Opportunities`.`crawled` = FALSE
    )
 GROUP BY
    str_to_date(concat(yearweek(date(coalesce(null, `Opportunities`.`first_reviewed`, `Opportunities`.`last_reviewed`))),'Sunday'),'%X%V %W')

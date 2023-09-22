@@ -10,6 +10,7 @@ WHERE
       `opportunity_operational_hires`.`hiring_date` > "2021-7-18"
       AND `opportunity_operational_hires`.`hiring_date` < date(now(6))
       AND (`Opportunities`.`fulfillment` like '%prime%' OR `Opportunities`.`fulfillment` like '%agile%' or `Opportunities`.`fulfillment` like '%staff_augmentation%')
+      AND `Opportunities`.`crawled` = FALSE
    )
 GROUP BY
    str_to_date(concat(yearweek(date(coalesce(null, `Opportunities`.`first_reviewed`, `Opportunities`.`last_reviewed`))),'Sunday'),'%X%V %W')

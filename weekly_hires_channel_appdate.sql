@@ -56,6 +56,7 @@ WHERE
             AND o.objective NOT LIKE '**%'
             AND o.review = 'approved'
         )
+    AND o.crawled = FALSE
 GROUP BY 
     str_to_date(concat(yearweek(ocan.interested),' Sunday'),'%X%V %W'),
     tc.utm_medium,

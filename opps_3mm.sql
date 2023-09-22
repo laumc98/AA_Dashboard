@@ -44,6 +44,7 @@ FROM
                                     oc.name = 'mutual matches'
                                     AND occh.created >= '2021-01-01'
                                     AND o.objective NOT LIKE '**%'
+                                    AND o.crawled = FALSE
                                     AND o.id NOT IN (
                                         SELECT
                                             DISTINCT opportunity_id
@@ -125,6 +126,7 @@ FROM
                                     oc.name = 'mutual matches'
                                     AND occh.created >= '2021-01-01'
                                     AND o.objective NOT LIKE '**%'
+                                    AND o.crawled = FALSE
                                     AND o.id NOT IN (
                                         SELECT
                                             DISTINCT opportunity_id

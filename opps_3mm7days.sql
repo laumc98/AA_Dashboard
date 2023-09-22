@@ -45,6 +45,7 @@ FROM
                                     AND occh.created >= '2021-01-01'
                                     AND datediff(date(occh.created), date(coalesce(null, o.first_reviewed, o.last_reviewed))) <= 7
                                     AND o.objective NOT LIKE '**%'
+                                    AND o.crawled = FALSE
                                     AND o.id NOT IN (
                                         SELECT
                                             DISTINCT opportunity_id
@@ -127,6 +128,7 @@ FROM
                                     AND occh.created >= '2021-01-01'
                                     AND datediff(date(occh.created), date(coalesce(null, o.first_reviewed, o.last_reviewed))) <= 7
                                     AND o.objective NOT LIKE '**%'
+                                    AND o.crawled = FALSE
                                     AND o.id NOT IN (
                                         SELECT
                                             DISTINCT opportunity_id

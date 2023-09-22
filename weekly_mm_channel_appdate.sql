@@ -25,6 +25,7 @@ FROM
         AND oca.interested IS NOT NULL 
         AND o.objective NOT LIKE '**%'
         AND oca.application_step IS NOT NULL
+        AND o.crawled = FALSE
         AND o.id IN (
             SELECT
                 DISTINCT o.id AS opportunity_id

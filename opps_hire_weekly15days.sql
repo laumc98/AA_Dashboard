@@ -13,6 +13,7 @@ WHERE
          date(`opportunity_operational_hires`.`hiring_date`),
          (date(coalesce(null, `Opportunities`.`first_reviewed`, `Opportunities`.`last_reviewed`)))
       ) <= 15
+      AND `Opportunities`.`crawled` = FALSE
    )
 GROUP BY
    str_to_date(concat(yearweek(date(coalesce(null, `Opportunities`.`first_reviewed`, `Opportunities`.`last_reviewed`))),'Sunday'),'%X%V %W')

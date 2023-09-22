@@ -41,6 +41,7 @@ WHERE
         (date(coalesce(null, o.first_reviewed, o.last_reviewed)))
     ) <= 7
     AND (o.fulfillment like '%self_service%' or o.fulfillment like '%essentials%' or o.fulfillment like '%pro%')
+    AND o.crawled = FALSE
 GROUP BY
    str_to_date(concat(yearweek(date(coalesce(null, o.first_reviewed, o.last_reviewed))),'Sunday'),'%X%V %W')
 ORDER BY
