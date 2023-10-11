@@ -10,7 +10,6 @@ FROM
 WHERE
     (
         applications.filters_passed = TRUE
-        AND applications.match_score > 0.80
         AND JSON_EXTRACT(opportunity.opportunity_snapshot, '$."crawled"') = FALSE
     )
 GROUP BY 
