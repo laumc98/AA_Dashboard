@@ -1,6 +1,7 @@
 /* AA : AA Main dashboard : opps with 3+mm 7 days : prod */ 
 SELECT
     str_to_date(concat(yearweek(dt.reviewed), ' Sunday'),'%X%V %W') AS date,
+    wk.fulfillment,
     wk.opportunities AS opps_3mm_weekly_7days
 FROM
     (
@@ -91,11 +92,13 @@ FROM
         SELECT
             YEAR(reviewed_date) AS year,
             WEEK(reviewed_date) AS week,
+            fulfillment,
             COUNT(*) AS opportunities
         FROM
             (
                 SELECT
                     opportunity_id,
+                    fulfillment,
                     created AS match_date,
                     last_reviewed AS reviewed_date
                 FROM
@@ -117,6 +120,7 @@ FROM
                                 SELECT
                                     oc.opportunity_id,
                                     occh.created,
+                                    o.fulfillment,
                                     date(coalesce(null, o.first_reviewed, o.last_reviewed)) as last_reviewed,
                                     oc.name
                                 FROM
@@ -167,6 +171,7 @@ FROM
             ) groupped
         GROUP BY
             year,
-            week
+            week,
+            fulfillment
     ) AS wk ON wk.year = dt.year
     AND wk.week = dt.week;
