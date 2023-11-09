@@ -1,17 +1,18 @@
 /* AA : AA Main dashboard : list mm : prod */
 SELECT
-    occh.candidate_id AS id,
-    date(occh.created) AS date,
-    o.fulfillment
+    applications.gg_id,
+    date(applications.timestamp) AS date,
+    applications.opportunity_reference_id AS 'Alfa ID'
 FROM
-    opportunity_candidate_column_history occh
-    INNER JOIN opportunity_columns oc ON occh.to = oc.id
-    INNER JOIN opportunities o ON oc.opportunity_id = o.id
+    applications
+    LEFT JOIN mutual_matches ON (
+        mutual_matches.gg_id = applications.gg_id
+        AND mutual_matches.opportunity_reference_id = applications.opportunity_reference_id
+    )
 WHERE
-    oc.name = 'mutual matches'
-    AND o.objective NOT LIKE '**%'
-    AND o.crawled = FALSE
+    (applications.filters_passed = true
+    OR mutual_matches.timestamp IS NOT NULL)
     AND (
-        occh.created >= date(now(6))
-        AND occh.created < date(date_add(now(6), INTERVAL 1 day))
+        applications.timestamp >= date(now(6))
+        AND applications.timestamp < date(date_add(now(6), INTERVAL 1 day))
     )

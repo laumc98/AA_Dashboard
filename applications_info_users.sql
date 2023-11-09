@@ -3,6 +3,7 @@ SELECT
     opportunity_candidates.interested AS 'application date',
     opportunity_candidates.opportunity_id AS 'OppID',
     opportunities.fulfillment AS 'fulfillment',
+    opportunity_candidates.id AS 'id',
     people.id AS 'people_id',
     people.subject_identifier AS 'subject_id',
     people.gg_id AS 'gg_id'
