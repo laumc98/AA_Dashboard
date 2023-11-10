@@ -13,10 +13,6 @@ WHERE
         AND date(coalesce(null, `opportunities`.`first_reviewed`, `opportunities`.`last_reviewed`)) < date(date_add(now(6), INTERVAL 1 day))
         AND `opportunities`.`review` = 'approved'
         AND `opportunities`.`crawled` = FALSE
-        AND (
-            `Opportunity Organizations`.`organization_id` <> 748404
-            OR `Opportunity Organizations`.`organization_id` IS NULL
-        )
     )
 GROUP BY
     str_to_date(concat(yearweek(date(coalesce(null, `opportunities`.`first_reviewed`, `opportunities`.`last_reviewed`))), ' Sunday'),'%X%V %W'),
