@@ -1,7 +1,7 @@
 /* AA : AA Main dashboard : matching applicants : prod */
 SELECT
     applications.opportunity_reference_id AS 'Alfa ID',
-    date(applications.timestamp) AS application_date,
+    applications.timestamp AS application_date,
     applications.gg_id
 FROM
     applications
