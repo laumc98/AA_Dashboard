@@ -13,6 +13,5 @@ FROM
 WHERE
     (applications.filters_passed = true
     OR mutual_matches.timestamp IS NOT NULL)
-    AND applications.timestamp >= '2021-01-01'
     AND JSON_EXTRACT(opportunity.opportunity_snapshot, '$."crawled"') = FALSE
     AND JSON_EXTRACT(opportunity.opportunity_snapshot, '$."review"') = 'approved'

@@ -41,6 +41,10 @@ WHERE
     datediff(
         date(all_hires.hire_date),
         (date(coalesce(null, o.first_reviewed, o.last_reviewed)))
+    ) > 7
+    AND datediff(
+        date(all_hires.hire_date),
+        (date(coalesce(null, o.first_reviewed, o.last_reviewed)))
     ) <= 15
     AND o.crawled = FALSE
 GROUP BY
