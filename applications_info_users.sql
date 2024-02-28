@@ -14,3 +14,4 @@ FROM
 WHERE 
     opportunity_candidates.interested IS NOT NULL 
     AND opportunity_candidates.interested > '2022-04-01'
+    AND opportunities.crawled = FALSE
